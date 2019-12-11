@@ -1,14 +1,44 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/user/user"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "小日程",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "selectedColor": "#5626e5",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "今日",
+        "iconPath": "./images/icons/icon_today.png",
+        "selectedIconPath": "./images/icons/icon_today_selected.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "打卡",
+        "iconPath": "./images/icons/icon_check.png",
+        "selectedIconPath": "./images/icons/icon_check_selected.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "纪念日",
+        "iconPath": "./images/icons/icon_anniversary.png",
+        "selectedIconPath": "./images/icons/icon_anniversary_selected.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "./images/icons/icon_user.png",
+        "selectedIconPath": "./images/icons/icon_user_selected.png"
+      }
+    ]
+  }
 }
