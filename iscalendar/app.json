@@ -18,26 +18,26 @@
       {
         "pagePath": "pages/index/index",
         "text": "今日",
-        "iconPath": "./images/icons/icon_today.png",
-        "selectedIconPath": "./images/icons/icon_today_selected.png"
+        "iconPath": "./images/tabbar/icon_today.png",
+        "selectedIconPath": "./images/tabbar/icon_today_selected.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "打卡",
-        "iconPath": "./images/icons/icon_check.png",
-        "selectedIconPath": "./images/icons/icon_check_selected.png"
+        "iconPath": "./images/tabbar/icon_check.png",
+        "selectedIconPath": "./images/tabbar/icon_check_selected.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "纪念日",
-        "iconPath": "./images/icons/icon_anniversary.png",
-        "selectedIconPath": "./images/icons/icon_anniversary_selected.png"
+        "iconPath": "./images/tabbar/icon_anniversary.png",
+        "selectedIconPath": "./images/tabbar/icon_anniversary_selected.png"
       },
       {
         "pagePath": "pages/user/user",
         "text": "我的",
-        "iconPath": "./images/icons/icon_user.png",
-        "selectedIconPath": "./images/icons/icon_user_selected.png"
+        "iconPath": "./images/tabbar/icon_user.png",
+        "selectedIconPath": "./images/tabbar/icon_user_selected.png"
       }
     ]
   }
