@@ -5,14 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    cur: 'aaa'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log("message: ", options.content)
+    var that = this
+    that.setData({
+      cur: options.content,
+    })
   },
 
   /**

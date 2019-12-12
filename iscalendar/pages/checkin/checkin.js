@@ -23,7 +23,8 @@ Page({
     ],
 
     Image_addItem_URL: "../../images/icon/icon_add.png",
-    Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png"
+    Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
+    Details_Page_URL: "./checkin_content/checkin_content"
   },
 
   /**
@@ -86,5 +87,16 @@ Page({
   // 从数据库中进行获取
   getCheckinLists(){
     //TODO
+  },
+
+  //跳转到打卡详情界面
+  goDetails:function(e){
+    console.log('点击具体打卡项')
+    console.log(e)
+    //实现界面的跳转
+    //TODO: 带参数跳转
+    wx.navigateTo({
+      url: "./checkin_content/checkin_content?content=" + e.currentTarget.dataset.content
+    })
   }
 })
