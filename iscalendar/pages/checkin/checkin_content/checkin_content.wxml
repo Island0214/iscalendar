@@ -1,3 +1,28 @@
 <!--pages/checkin/checkin_content/checkin_content.wxml-->
 <text>打卡详情界面</text>
 <view>详情：{{cur}}</view>
+
+<view class="page">
+  <view class="page__bd page__bd_spacing body-wrapper">
+    <view class="weui-flex" class="today-wrapper">
+      <view class="week">
+        {{today.week}}
+      </view>
+      <view class="month">
+        {{today.month}}
+      </view>
+      <view class="day">
+        {{today.day}}
+      </view>
+      <view class="year">
+        {{today.year}}
+      </view>
+    </view>
+    <view class="weui-flex" class="calendar-wrapper">
+      <view class="weui-flex__item">
+        <calendar calendarConfig="{{calendarConfig}}" bind:onTapDay="onTapDay" bind:afterTapDay="afterTapDay" bind:onSwipe="onSwipe" bind:whenChangeWeek="whenChangeWeek" bind:whenChangeMonth="whenChangeMonth" bind:afterCalendarRender="afterCalendarRender"></calendar>
+      </view>
+    </view>
+  </view>
+
+</view>

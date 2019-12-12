@@ -1,1 +1,68 @@
 /* pages/checkin/checkin_content/checkin_content.wxss */
+
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.body-wrapper {
+  background-color: #fff;
+  margin: 15px;
+  padding: 0;
+  border-radius: 3px;
+}
+
+.today-wrapper {
+  border-radius: 3px 3px 0 0;
+  background-color: #5626e5;
+  padding: 5px 15px;
+  text-align: center;
+  color: #fff;
+}
+
+.week {
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.month, .year {
+  color: #ffffff80;
+  margin: 4px 0;
+}
+
+.day {
+  font-size: 32px;
+  margin: 0;
+  line-height: 32px;
+}
+
+.calendar-wrapper {
+  padding: 5px 15px;
+}
+
+.weui-grids {
+  border: none;
+}
+
+.weui-grid {
+  border: none;
+  text-align: center;
+  padding: 5px;
+}
