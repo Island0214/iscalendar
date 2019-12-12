@@ -1,0 +1,94 @@
+/* pages/checkin/checkin.wxss */
+
+/* 礼品列表 */
+.giftListView {
+  width: 90%;
+  bottom: 0;
+  top: 500rpx;
+  position: absolute;
+
+}
+
+/* 每个cell单独的样式 */
+.item {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+  /* background-color: green; */
+  border-bottom: 20px solid #fafafa;
+  border: 20rpx solid #dadada;
+  border-width: 20rpx 0;
+}
+
+
+/* cell 产品图 */
+.iconImageView {
+  width: 100rpx;
+  height: 100rpx;
+  top: 50rpx;
+  left: 40rpx;
+  border-radius: 25px;
+  /* background-color:orange; */
+  position: absolute;
+}
+
+.iconImage {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+/* 打卡内容名 */
+.ItemNameView {
+  top: 65rpx;
+  left: 160rpx;
+  right: 130rpx;
+  height: 50rpx;
+  position: absolute;
+}
+
+/* 打卡内容文本样式 */
+.ItemNameText {
+  color: rgb(32, 27, 27);
+  font-size: 35rpx;
+  white-space: nowrap;
+    text-overflow:ellipsis;
+}
+
+/* 需要积分数 */
+.needScoreView {
+  top: 50rpx;
+  right: 10rpx;
+  height: 50rpx;
+  width: 100rpx;
+  position: absolute;
+}
+.needSocreText {
+  color: rgb(230, 204, 140);
+  font-size: 25rpx;
+}
+
+/* 具体产品 */
+.productDesView {
+  top: 120rpx;
+  height: 50rpx;
+  left: 280rpx;
+  right: 20rpx;
+  /* background-color: gray; */
+  position: absolute;
+}
+.productDesText {
+  font-size: 32rpx;
+  color: gray;
+  display: block;
+  /* line-height: 50rpx; */
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+   /* -webkit-line-clamp:1;  */
+}
+
+
+.kind-list-img-checkin {
+  width: 100rpx;
+  height: 100rpx;
+}

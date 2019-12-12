@@ -1,0 +1,19 @@
+<view class="page__bd page__bd_spacing">
+  <block wx:for="{{checkinLists}}" wx:for-item="item" wx:key="index">
+    <view class="kind-list__item">
+      <view class="weui-flex kind-list__item-hd">
+        <image class="kind-list-img-checkin" src="{{Image_checkinItem_URL}}"></image>
+        <view class="weui-flex__item" style="padding-left: 20rpx;">{{item.name}}</view>
+        <view class="weui-flex__item" style="text-align: right;">
+            <text class='ItemNameText'>已坚持\n0天</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!--添加打卡项[图片]-->
+<view class="page__ft">
+  <!-- 添加打卡项内容 -->
+  <image src="{{Image_addItem_URL}}" style="width: 35px; height: 35px;">  </image>  
+</view>
