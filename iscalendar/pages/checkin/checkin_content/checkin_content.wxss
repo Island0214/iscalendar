@@ -66,3 +66,31 @@
   text-align: center;
   padding: 5px;
 }
+
+progress{
+  width: 100%;
+}
+.progress-box{
+  display: flex;
+  height: 50rpx;
+  margin-bottom: 60rpx;
+}
+.progress-cancel{
+  margin-left: 40rpx;
+}
+
+.page__bd {
+    padding-bottom: 10px;
+}
+
+.page-text{
+  padding-top:3px;
+  font-size: 12px;
+  padding-bottom: 3px;
+}
+
+.operation-icon{
+  padding-right: 10px;
+  width: 40px; 
+  height: 36px;
+}

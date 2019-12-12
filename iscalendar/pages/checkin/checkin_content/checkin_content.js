@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cur: 'aaa',
+    cur: '',
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -33,6 +33,23 @@ Page({
       'year': '',
       'week': ''
     },
+
+    checkinItem:{
+      'plannedDays': 'NaN1',      //计划天数
+      'checkinDays': 'NaN2',      //打卡天数
+      'missedDays': 'NaN3',       //错过天数
+      'totalCheckedDays': 'NaN4', //总计打卡天数
+      'curConsecutiveDays': 'NaN5', //当前连续时长
+      'maxConsecutiveDays': 'NaN6', //最大连续时长
+      'createDay': 'NaN7',         //建立时间
+      'checkinProgess': "0"           //当前进度
+    },
+
+    icon_url: {
+      'icon_delete': '../../../images/icon/icon_delete.png',
+      'icon_edit': '../../../images/icon/icon_edit.png',
+    },
+
     clocks: [
       {
         id: '1232131',
@@ -225,5 +242,15 @@ Page({
    * 日历初次渲染完成后触发事件，如设置事件标记
    */
   afterCalendarRender(e) {
-  }
+  },
+
+  //按下删除图标
+  onClickDelete: function(e) {
+    console.log("按下了删除图标");
+  },
+
+  //按下编辑图标
+  onClickEdit: function(e){
+    console.log("按下了编辑图标");
+  },
 })

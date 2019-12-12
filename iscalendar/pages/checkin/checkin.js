@@ -7,19 +7,19 @@ Page({
   data: {
     // 所有的打卡列表
     checkinLists:[
-      {name:"打卡列表1"},
-      {name:"打卡列表2"},
-      {name:"打卡列表3"},
-      { name: "打卡列表4" },
-      { name: "打卡列表5" },
-      { name: "打卡列表6" },
-      { name: "打卡列表7" },
-      { name: "打卡列表8" },
-      { name: "打卡列表9" },
-      { name: "打卡列表10" },
-      { name: "打卡列表11" },
-      { name: "打卡列表12" },
-      { name: "打卡列表13" }
+      { name: "跑步" },
+      { name: "早起" },
+      { name: "健走" },
+      { name: "饮食" },
+      { name: "学习" },
+      { name: "做作业" },
+      { name: "英语" },
+      { name: "数学" },
+      { name: "语文" },
+      { name: "物理" },
+      { name: "化学" },
+      { name: "test1" },
+      { name: "test2" }
     ],
 
     Image_addItem_URL: "../../images/icon/icon_add.png",
