@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -32,8 +32,20 @@ App({
         }
       }
     })
+
+    var day = new Date();
+    day.setTime(day.getTime());
+    var arr_week = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+    var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+    this.globalData.today = {
+      'day': day.getDate(),
+      'month': arr_month[day.getMonth()],
+      'year': day.getFullYear(),
+      'week': arr_week[day.getDay()]
+    }
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    today: {}
   }
 })
