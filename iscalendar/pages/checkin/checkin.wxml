@@ -1,6 +1,9 @@
+<view class="page__bd">
+</view>
+
 <view class="page__bd page__bd_spacing">
   <block wx:for="{{checkinLists}}" wx:for-item="item" wx:key="index">
-    <view class="kind-list__item">
+    <view class="kind-list__item" style="box-shadow:2px 2px 8px 2px #888888;">
       <view class="weui-flex kind-list__item-hd">
         <image class="kind-list-img-checkin" src="{{Image_checkinItem_URL}}"></image>
         <view class="weui-flex__item" style="padding-left: 20rpx;">{{item.name}}</view>
