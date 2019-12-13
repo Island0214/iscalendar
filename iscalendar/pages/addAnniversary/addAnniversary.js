@@ -6,7 +6,9 @@ Page({
    */
   data: {
     today: '',
-    date: ''
+    date: '',
+    types: ['非纪念日', '每月纪念', '每年纪念'],
+    selectedType: '非纪念日'
   },
 
   /**
@@ -69,5 +71,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  selectType: function (event) {
+    this.setData({
+      selectedType: event.currentTarget.dataset.item
+    })
   }
 })
