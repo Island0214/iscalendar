@@ -1,0 +1,10 @@
+<view>
+  <text>距离下一个纪念日</text>
+</view>
+<view>
+  <text>240天</text>
+</view>
+<view>
+  <text>事件备注</text>
+</view>
+<textarea ></textarea>
