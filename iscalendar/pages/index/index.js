@@ -33,41 +33,41 @@ Page({
       {
         id: '1232131',
         name: '跑步',
-        image: '1.png',
+        iconURL: '1.png',
         background: '#d6c6de',
-        days: 1,
+        stickDays: 1,
         checked: false
       },
       {
         id: '1232132',
         name: '早起',
-        image: '2.png',
+        iconURL: '2.png',
         background: '#5626e530',
-        days: 2,
+        stickDays: 2,
         checked: true
       },
       {
         id: '1232133',
         name: '跑步',
-        image: '3.png',
+        iconURL: '3.png',
         background: '#d6c6de',
-        days: 1,
+        stickDays: 1,
         checked: true
       },
       {
         id: '1232134',
         name: '跑步',
-        image: '4.png',
+        iconURL: '4.png',
         background: '#d6c6de',
-        days: 1,
+        stickDays: 1,
         checked: false
       },
       {
         id: '1232135',
         name: '跑步',
-        image: '5.png',
+        iconURL: '5.png',
         background: '#d6c6de',
-        days: 1,
+        stickDays: 1,
         checked: false
       }
     ]

@@ -1,21 +1,9 @@
 <!--pages/checkin/checkin_content/checkin_content.wxml-->
-
-<text class="page__bd_spacing" style="text-align:center">{{cur}}</text>
-
 <view class="page"> 
   <view class="page__bd page__bd_spacing body-wrapper">
     <view class="weui-flex" class="today-wrapper">
-      <view class="week">
-        {{today.week}}
-      </view>
-      <view class="month">
-        {{today.month}}
-      </view>
-      <view class="day">
-        {{today.day}}
-      </view>
-      <view class="year">
-        {{today.year}}
+      <view class="title">
+        {{cur}}
       </view>
     </view>
     <view class="weui-flex" class="calendar-wrapper">
@@ -71,8 +59,10 @@
     <!--TODO:添加对应的变量，数组化-->
     <h3>事件操作</h3>
     <view class="page__bd">
-      <image src="{{icon_url.icon_delete}}" class="operation-icon" bindtap="onClickDelete">  </image>  
-      <image src="{{icon_url.icon_edit}}" class="operation-icon" bindtap="onClickEdit">  </image>  
+      <view class="operation-icon" bindtap="onClickDelete">
+            <image src="{{icon_url.icon_delete}}">  </image>  
+      </view>
+      <!-- <image src="{{icon_url.icon_edit}}" class="operation-icon" bindtap="onClickEdit">  </image>   -->
     </view>
   </view> 
 

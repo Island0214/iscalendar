@@ -14,6 +14,7 @@ Component({
     backgroundColor: '#DDD7F7',
     imageUrl: '1.png',
     icons: [],
+    displays: [],
     backgrounds: []
   },
 
@@ -42,11 +43,17 @@ Component({
           that.setData({
             icons: res.files
           })
+          that.setData({
+            displays: that.data.icons.map((item) => {
+              return item.indexOf('.png') > 0
+            })
+          })
         },
         fail: console.error
       })
     },
     clickClock: function (event) {
+      console.log(event.currentTarget.dataset.item.indexOf('.png'))
       this.setData({
         imageUrl: event.currentTarget.dataset.item
       })

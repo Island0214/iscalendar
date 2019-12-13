@@ -134,9 +134,17 @@ h1, h2, h3, h4, h5, h6 {
 .my-input {
   background-color: #eee;
   border-radius: 3px;
-  padding: 10px
+  padding: 10px;
 }
 
 button[type='primary'] {
   background-color: #5626e5;
+}
+
+.full-btn {
+  background: #ffffff60;
+  margin: 0 15px;
+  padding: 15px;
+  color: #999;
+  border: 2px solid #999;
 }

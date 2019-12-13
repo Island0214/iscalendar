@@ -8,54 +8,45 @@ Page({
     // 所有的打卡列表
     checkinLists:[
       {
-        id:1,
-        name: "跑步",       //打卡名称
-        iconURL: "../../images/icon/item/item_running.png",          //指定图标
-        stickDays: "5",    //坚持日期
-        details: "",       //打卡详细内容
+        id: '1232131',
+        name: '跑步',
+        iconURL: '1.png',
+        background: '#d6c6de',
+        stickDays: 1,
+        checked: false
       },
       {
-        id: 2,
-        name: "早起",       //打卡名称
-        iconURL: "../../images/icon/item/item_getup.png",          //指定图标
-        stickDays: "2",    //坚持日期
-        details: "",       //打卡详细内容
+        id: '1232132',
+        name: '早起',
+        iconURL: '2.png',
+        background: '#5626e530',
+        stickDays: 2,
+        checked: true
       },
       {
-        id: 3,
-        name: "健走",       //打卡名称
-        iconURL: "../../images/icon/item/item_exercise.png",          //指定图标
-        stickDays: "4",    //坚持日期
-        details: "",       //打卡详细内容
+        id: '1232133',
+        name: '跑步',
+        iconURL: '3.png',
+        background: '#d6c6de',
+        stickDays: 1,
+        checked: true
       },
       {
-        id: 4,
-        name: "学习",       //打卡名称
-        iconURL: "../../images/icon/item/item_study.png",          //指定图标
-        stickDays: "1",    //坚持日期
-        details: "",       //打卡详细内容
+        id: '1232134',
+        name: '跑步',
+        iconURL: '4.png',
+        background: '#d6c6de',
+        stickDays: 1,
+        checked: false
       },
       {
-        id: 5,
-        name: "背单词",       //打卡名称
-        iconURL: "../../images/icon/item/item_default.png",          //指定图标
-        stickDays: "0",    //坚持日期
-        details: "",       //打卡详细内容
-      },
-      {
-        id: 6,
-        name: "节食",       //打卡名称
-        iconURL: "../../images/icon/item/item_eating.png",          //指定图标
-        stickDays: "0",    //坚持日期
-        details: "",       //打卡详细内容
-      },
-      {
-        id: 7,
-        name: "写代码",       //打卡名称
-        iconURL: "../../images/icon/item/item_coding.png",          //指定图标
-        stickDays: "4",    //坚持日期
-        details: "",       //打卡详细内容
-      },
+        id: '1232135',
+        name: '跑步',
+        iconURL: '5.png',
+        background: '#d6c6de',
+        stickDays: 1,
+        checked: false
+      }
     ],
     curID: 7,
     Image_addItem_URL: "../../images/icon/icon_add.png",
@@ -149,12 +140,15 @@ Page({
 
   //添加一个打卡卡片
   onClickAdd: function(e){
-    console.log("添加卡片");
-    this.setData({
-      isMaskWindowShow: !this.data.isMaskWindowShow,
-      maskWindowInputValue_title: "",
-      maskWindowInputValue_content: "",
+    console.log("add")
+    wx.navigateTo({
+      url: "../addCheck/addCheck"
     })
+    // this.setData({
+    //   isMaskWindowShow: !this.data.isMaskWindowShow,
+    //   maskWindowInputValue_title: "",
+    //   maskWindowInputValue_content: "",
+    // })
   },
 
   //长按卡片事件

@@ -37,20 +37,11 @@
   color: #fff;
 }
 
-.week {
-  font-size: 10px;
-  margin-bottom: 10px;
-}
-
-.month, .year {
-  color: #ffffff80;
-  margin: 4px 0;
-}
-
-.day {
+.title {
   font-size: 32px;
-  margin: 0;
+  margin: 20px;
   line-height: 32px;
+  font-weight: 600;
 }
 
 .calendar-wrapper {
@@ -90,7 +81,18 @@ progress{
 }
 
 .operation-icon{
-  padding-right: 10px;
-  width: 40px; 
-  height: 36px;
+  width: 50px; 
+  height: 50px;
+  background-color: #5626e5;
+  border-radius: 50%;
+  position: relative;
+}
+
+.operation-icon image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
 }
