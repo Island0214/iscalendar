@@ -194,6 +194,7 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    //TODO:在这里加载个人数据？
   },
   /**
   * 选择日期后执行的事件
@@ -253,4 +254,6 @@ Page({
   onClickEdit: function(e){
     console.log("按下了编辑图标");
   },
+
+
 })

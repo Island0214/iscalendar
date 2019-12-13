@@ -7,24 +7,71 @@ Page({
   data: {
     // 所有的打卡列表
     checkinLists:[
-      { name: "跑步" },
-      { name: "早起" },
-      { name: "健走" },
-      { name: "饮食" },
-      { name: "学习" },
-      { name: "做作业" },
-      { name: "英语" },
-      { name: "数学" },
-      { name: "语文" },
-      { name: "物理" },
-      { name: "化学" },
-      { name: "test1" },
-      { name: "test2" }
+      {
+        id:1,
+        name: "跑步",       //打卡名称
+        iconURL: "../../images/icon/item/item_running.png",          //指定图标
+        stickDays: "5",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 2,
+        name: "早起",       //打卡名称
+        iconURL: "../../images/icon/item/item_getup.png",          //指定图标
+        stickDays: "2",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 3,
+        name: "健走",       //打卡名称
+        iconURL: "../../images/icon/item/item_exercise.png",          //指定图标
+        stickDays: "4",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 4,
+        name: "学习",       //打卡名称
+        iconURL: "../../images/icon/item/item_study.png",          //指定图标
+        stickDays: "1",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 5,
+        name: "背单词",       //打卡名称
+        iconURL: "../../images/icon/item/item_default.png",          //指定图标
+        stickDays: "0",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 6,
+        name: "节食",       //打卡名称
+        iconURL: "../../images/icon/item/item_eating.png",          //指定图标
+        stickDays: "0",    //坚持日期
+        details: "",       //打卡详细内容
+      },
+      {
+        id: 7,
+        name: "写代码",       //打卡名称
+        iconURL: "../../images/icon/item/item_coding.png",          //指定图标
+        stickDays: "4",    //坚持日期
+        details: "",       //打卡详细内容
+      },
     ],
-
+    curID: 7,
     Image_addItem_URL: "../../images/icon/icon_add.png",
     Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
-    Details_Page_URL: "./checkin_content/checkin_content"
+    Details_Page_URL: "./checkin_content/checkin_content",
+
+    //是否需要隐藏弹窗
+    hiddenModalPut: true,
+    showInput: false, //控制输入栏
+
+    isMaskWindowShow: false,
+    maskWindowList: ['时间太早', '时间太晚', '距离太远', '交通不方便', '其他（输入）', '没有原因'],
+    selectIndex: -1,
+    isMaskWindowInputShow: false,
+    maskWindowInputValue_title: "",
+    maskWindowInputValue_content: "",
   },
 
   /**
@@ -98,5 +145,113 @@ Page({
     wx.navigateTo({
       url: "./checkin_content/checkin_content?content=" + e.currentTarget.dataset.content
     })
-  }
+  },
+
+  //添加一个打卡卡片
+  onClickAdd: function(e){
+    console.log("添加卡片");
+    this.setData({
+      isMaskWindowShow: !this.data.isMaskWindowShow,
+      maskWindowInputValue_title: "",
+      maskWindowInputValue_content: "",
+    })
+  },
+
+  //长按卡片事件
+  onLongPressCard: function(e){
+    console.log("长按卡片");
+  },
+
+
+  //弹框以外区域点击
+  maskWindowBgClick: function (e) {
+    this.dismissMaskWindow();
+  },
+
+  //弹窗区域点击事件
+  clickTap: function (e) {
+
+  },
+
+  //切换选择项事件
+  maskWindowTableSelect: function (e) {
+    var index = e.currentTarget.dataset.windowIndex;
+    this.setData({
+      selectIndex: e.currentTarget.dataset.windowIndex,
+      isMaskWindowInputShow: index == 4
+    })
+  },
+
+  //输入框[标题]输入绑定事件
+  maskWindowInput_title: function (e) {
+    var value = e.detail.value;
+    this.setData({
+      maskWindowInputValue_title: value
+    })
+  },
+
+  //输入框[详情]输入绑定事件
+  maskWindowInput_content: function (e) {
+    var value = e.detail.value;
+    this.setData({
+      maskWindowInputValue_content: value
+    })
+  },
+
+  maskWindowOk: function (e) {
+    console.log("确定按钮");
+    var index = this.data.selectIndex;
+    var text_title = this.data.maskWindowInputValue_title;
+    var text_content = this.data.maskWindowInputValue_content;
+
+    //判断字符串是否为空
+    if (typeof text_title == "undefined" || text_title == null || text_title == "") {
+      this.dismissMaskWindow();
+      return;
+    }
+    
+    //添加一个新事项
+    var list = this.data.checkinLists;
+    var c_ID = ++this.data.curID;
+    var obj = {
+      id: c_ID,
+      name: text_title,       //打卡名称
+      iconURL: "../../images/icon/item/item_default.png",          //指定图标
+      stickDays: "0",    //坚持日期
+      details: text_content,       //打卡详细内容
+    };
+    list.push(obj);
+    this.setData({
+      checkinLists: list
+    });
+    console.log("添加ID",c_ID);
+    this.dismissMaskWindow();
+  },
+
+  maskWindowCancel: function (e) {
+    console.log("取消按钮");
+    this.dismissMaskWindow();
+  },
+
+  // 显示蒙版弹窗
+  showMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: true,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      maskWindowInputValue: ""
+    })
+  },
+
+  // 隐藏蒙版窗体
+  dismissMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: false,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      maskWindowInputValue: ""
+    })
+  },
+
+
 })

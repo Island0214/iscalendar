@@ -1,11 +1,11 @@
 <view class="page__bd page__bd_spacing body-wrapper">
   <block wx:for="{{checkinLists}}" wx:for-item="item" wx:key="index">
-    <view class="kind-list__item" style="box-shadow:2px 2px 8px 2px #888888;">
+    <view class="kind-list__item" style="box-shadow:2px 2px 8px 2px #888888;" bindlongtap="onLongPressCard">
       <view class="weui-flex kind-list__item-hd" data-content="{{item.name}}" bindtap='goDetails'>
-        <image class="kind-list-img-checkin" src="{{Image_checkinItem_URL}}"></image>
+        <image class="kind-list-img-checkin" src="{{item.iconURL}}"></image>
         <view class="weui-flex__item" style="padding-left: 20rpx;">{{item.name}}</view>
         <view class="weui-flex__item" style="text-align: right;">
-            <text class='ItemNameText'>已坚持\n0天</text>
+          <text class='ItemNameText'>已坚持\n{{item.stickDays}}天</text>
         </view>
       </view>
     </view>
@@ -15,5 +15,32 @@
 <!--添加打卡项[图片]-->
 <view class="page__ft">
   <!-- 添加打卡项内容 -->
-  <image src="{{Image_addItem_URL}}" style="width: 35px; height: 35px;">  </image>  
+  <image src="{{Image_addItem_URL}}" style="width: 35px; height: 35px;" bindtap="onClickAdd"></image>
+
+    <view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='maskWindowBgClick' catchtouchmove='move'>
+      <view class='maskWindowContent' catchtap='clickTap'>
+        <text class="maskWindowTitleText">新建打卡</text>
+        <!-- <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index%2===0}}'>
+          <view class="maskWindowText {{index == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
+          <view class="maskWindowText {{index + 1 == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index+1}}'>{{maskWindowList[index+1]}}</view>
+        </view> -->
+        <view class='maskWindowInputView maskWindowText'>
+          <text>打卡项目</text>
+          <input class='maskWindowInput' maxlength='100' placeholder='请输入打卡项目' bindinput='maskWindowInput_title'></input>
+        </view>
+        <view class='maskWindowInputView maskWindowText'>
+          <text>打卡详情</text>
+          <input class='maskWindowInput' maxlength='100' placeholder='请输入打卡项目详情' bindinput='maskWindowInput_content'></input>
+        </view>
+        <view class='maskWindowBtnView'>
+          <view class='maskWindowBtn' catchtap='maskWindowOk'>确定</view>
+          <view class='maskWindowBtn' catchtap='maskWindowCancel'>取消</view>
+        </view>
+      </view>
+    </view>
+
+
+
+  
+
 </view>
