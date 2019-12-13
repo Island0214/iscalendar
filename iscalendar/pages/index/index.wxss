@@ -22,11 +22,13 @@
 }
 
 .today-wrapper {
+  position: relative;
   border-radius: 3px 3px 0 0;
   background-color: #5626e5;
   padding: 5px 15px;
   text-align: center;
   color: #fff;
+  overflow: hidden;
 }
 
 .week {
@@ -57,4 +59,26 @@
   border: none;
   text-align: center;
   padding: 5px;
+}
+
+.new-diary-btn {
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+}
+
+.add-btn {
+position: absolute;
+top: 50px;
+font-size: 36px;
+color: #5626e5;
+right: 50px;
+line-height: 32px;
+width: 36px;
+font-weight: 600;
+
 }

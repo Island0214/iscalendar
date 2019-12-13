@@ -1,6 +1,11 @@
 <view class="page">
   <view class="page__bd page__bd_spacing body-wrapper">
     <view class="weui-flex" class="today-wrapper">
+      <view class="new-diary-btn">
+        <view class="add-btn">
+          +
+        </view>
+      </view>
       <view class="week">
         {{today.week}}
       </view>
@@ -23,23 +28,10 @@
 
   <view class="page__bd page__bd_spacing">
     <h3>今日打卡</h3>
-    <!-- <view class="weui-flex"> -->
-      <!-- <clock></clock> -->
       <view class="weui-grids">
         <block wx:for="{{clocks}}" wx:key="id">
-          <!-- <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-            <image class="weui-grid__icon" src="../images/icon_tabbar.png" />
-            <view class="weui-grid__label">Grid</view>
-          </navigator> -->
           <clock clockConfig="{{item}}" class="weui-grid"></clock>
         </block>
       </view>
-      <!-- <block wx:for="{{clocks}}" wx:key="id">
-        <view class="weui-flex__item">
-          <view id="{{item.id}}" class="weui-flex">
-            <clock clockConfig="{{item}}"></clock>
-          </view>
-        </view>
-      </block> -->
     </view>
 </view>
