@@ -9,49 +9,49 @@ Page({
     anniversaryLists: [
       {
         id: 1,
-        name: "跑步",       //纪念日名称
+        name: "纪念日1",       //纪念日名称
         iconURL: "../../images/icon/item/item_running.png",          //指定图标
         passDays: "5",    //已过时间
         createDate: "2019.01.01",       //纪念日创建日期
       },
       {
         id: 2,
-        name: "早起",       //纪念日名称
+        name: "纪念日2",       //纪念日名称
         iconURL: "../../images/icon/item/item_getup.png",          //指定图标
         passDays: "2",    //已过时间
         createDate: "2018.01.02",       //纪念日创建日期
       },
       {
         id: 3,
-        name: "健走",       //纪念日名称
+        name: "纪念日3",       //纪念日名称
         iconURL: "../../images/icon/item/item_exercise.png",          //指定图标
         passDays: "4",    //已过时间
         createDate: "2018.10.10",       //纪念日创建日期
       },
       {
         id: 4,
-        name: "学习",       //纪念日名称
+        name: "纪念日4",       //纪念日名称
         iconURL: "../../images/icon/item/item_study.png",          //指定图标
         passDays: "1",    //已过时间
         createDate: "1999.09.11",       //纪念日创建日期
       },
       {
         id: 5,
-        name: "背单词",       //纪念日名称
+        name: "纪念日5",       //纪念日名称
         iconURL: "../../images/icon/item/item_default.png",          //指定图标
         passDays: "0",    //已过时间
         createDate: "2019.11.11",       //纪念日创建日期
       },
       {
         id: 6,
-        name: "节食",       //纪念日名称
+        name: "纪念日6",       //纪念日名称
         iconURL: "../../images/icon/item/item_eating.png",          //指定图标
         passDays: "0",    //已过时间
         createDate: "2008.08.10",       //纪念日创建日期
       },
       {
         id: 7,
-        name: "写代码",       //纪念日名称
+        name: "纪念日7",       //纪念日名称
         iconURL: "../../images/icon/item/item_coding.png",          //指定图标
         passDays: "4",    //已过时间
         createDate: "2000.02.20",       //纪念日创建日期
@@ -144,7 +144,7 @@ Page({
     console.log(e)
     //TODO: 带参数跳转
     wx.navigateTo({
-      url: "/pages/anniversary/anniversary_content/anniversary_content?content=" + e.currentTarget.dataset.content
+      url:'/pages/anniversary/anniversary_content/anniversary_content'
     })
   },
 
