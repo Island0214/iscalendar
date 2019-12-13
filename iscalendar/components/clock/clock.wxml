@@ -1,7 +1,7 @@
 <!--components/clock/clock.wxml-->
 <view class="clock-wrapper">
   <view class="icon-wrapper" style="background: {{backgroundColor}}" bindtap="clickClock">
-    <image class="weui-grid__icon" src="{{clockConfig.image}}" />
+    <image class="weui-grid__icon" src="../../images/clock/{{clockConfig.image}}" />
   </view>
   <view class="weui-grid__name">{{clockConfig.name}}</view>
   <view class="weui-grid__label" wx:if="{{checked}}">已连续打卡{{clockConfig.days}}天</view>

@@ -33,7 +33,7 @@ Page({
       {
         id: '1232131',
         name: '跑步',
-        image: '../../images/clock/1.png',
+        image: '1.png',
         background: '#d6c6de',
         days: 1,
         checked: false
@@ -41,7 +41,7 @@ Page({
       {
         id: '1232132',
         name: '早起',
-        image: '../../images/clock/2.png',
+        image: '2.png',
         background: '#5626e530',
         days: 2,
         checked: true
@@ -49,7 +49,7 @@ Page({
       {
         id: '1232133',
         name: '跑步',
-        image: '../../images/clock/3.png',
+        image: '3.png',
         background: '#d6c6de',
         days: 1,
         checked: true
@@ -57,7 +57,7 @@ Page({
       {
         id: '1232134',
         name: '跑步',
-        image: '../../images/clock/4.png',
+        image: '4.png',
         background: '#d6c6de',
         days: 1,
         checked: false
@@ -65,7 +65,7 @@ Page({
       {
         id: '1232135',
         name: '跑步',
-        image: '../../images/clock/5.png',
+        image: '5.png',
         background: '#d6c6de',
         days: 1,
         checked: false

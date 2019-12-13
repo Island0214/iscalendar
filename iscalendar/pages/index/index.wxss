@@ -21,13 +21,6 @@
   margin-top: 200px;
 }
 
-.body-wrapper {
-  background-color: #fff;
-  margin: 15px;
-  padding: 0;
-  border-radius: 3px;
-}
-
 .today-wrapper {
   border-radius: 3px 3px 0 0;
   background-color: #5626e5;
