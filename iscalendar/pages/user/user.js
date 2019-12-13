@@ -22,7 +22,8 @@ Page({
       }
     ],
     date: '请选择',
-    phone: ''
+    phone: '',
+    today: ''
   },
   //事件处理函数
   bindViewTap: function() {
@@ -42,6 +43,10 @@ Page({
     })
   },
   onLoad: function() {
+    let date = new Date();
+    this.setData({
+      today: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

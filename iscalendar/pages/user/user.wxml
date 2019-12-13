@@ -20,7 +20,7 @@
       <view class="weui-flex kind-list__item-hd">
         <view class="weui-flex__item">生日</view>
         <view class="section weui-flex__item" style="text-align: right;">
-          <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange" placeholder="请选择">
+          <picker mode="date" value="{{date}}" start="1970-01-01" end= "{{today}}" bindchange="bindDateChange" placeholder="请选择">
             <view class="picker">
               {{date}}
             </view>

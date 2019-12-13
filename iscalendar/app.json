@@ -5,7 +5,8 @@
     "pages/user/user",
     "pages/checkin/checkin",
     "pages/checkin/checkin_content/checkin_content",
-    "pages/addCheck/addCheck"
+    "pages/addCheck/addCheck",
+    "pages/addAnniversary/addAnniversary"
   ],
   "window": {
     "backgroundTextStyle": "light",
