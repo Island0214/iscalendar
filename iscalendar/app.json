@@ -6,7 +6,9 @@
     "pages/checkin/checkin",
     "pages/checkin/checkin_content/checkin_content",
     "pages/addCheck/addCheck",
-    "pages/addAnniversary/addAnniversary"
+    "pages/addAnniversary/addAnniversary",
+    "pages/anniversary/anniversary",
+    "pages/anniversary/anniversary_content/anniversary_content"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -32,7 +34,7 @@
         "selectedIconPath": "./images/tabbar/icon_check_selected.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/anniversary/anniversary",
         "text": "纪念日",
         "iconPath": "./images/tabbar/icon_anniversary.png",
         "selectedIconPath": "./images/tabbar/icon_anniversary_selected.png"

@@ -1,0 +1,26 @@
+<!--pages/anniversary/anniversary_content/anniversary_content.wxml-->
+<view class="annDetailView">
+  <view class="ann_item">
+    <view class="itemInner" style="box-shadow:2px 2px 8px 2px #888888;">
+      <view class="item_left">
+        <text class="item_leftTextName">纪念日</text>
+        <text class="item_leftTextWeek">{{AnniversaryDetails.timeName}}</text>
+        <text class="item_leftTextMonthDay">{{AnniversaryDetails.month}} {{AnniversaryDetails.day}}</text>
+      </view>
+      <view class="item_right">
+        <text class='item_rightText_gray'>时间名</text>
+        <text class='item_rightText'>{{AnniversaryDetails.timeName}}</text>
+        <text class='item_rightText_gray2'>已过天数</text>
+        <text class='item_rightText'>{{AnniversaryDetails.passDay}}</text>
+      </view>
+    </view>
+  </view>
+  <text class="textTag">距离下一个纪念日</text>
+  <text class="NextAnnTime">{{AnniversaryDetails.nextAnniversary}}</text>
+  <text class="textTag">事件备注</text>
+  <textarea class="textArea"></textarea>
+  <text class="textTag">事件操作</text>
+  <view class="operation-icon" bindtap="onClickDelete">
+            <image src="{{icon_url.icon_delete}}">  </image>  
+  </view>
+</view>
