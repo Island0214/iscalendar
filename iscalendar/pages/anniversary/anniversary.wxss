@@ -98,6 +98,22 @@
 .kind-list-img-checkin {
   width: 100rpx;
   height: 100rpx;
+  position: relative;
+  display: inline-block;
+  border: 2px solid #666;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.kind-list__icon {
+  position: absolute;
+  display: block;
+  width: 80rpx;
+  height: 80rpx;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .toastbg {
@@ -108,138 +124,7 @@
   height: 100%;
 }
 
-.maskWindow {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  top: 0;
-  left: 0;
-}
-
-.maskWindowContent {
-  padding: 20rpx0;
-  width: 100%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-}
-
-.maskWindowTitleText {
-  padding: 10rpx20rpx;
-  margin: 10rpx;
-  font-size: 16px;
-  width: 80%;
-}
-
-.maskWindowList {
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-}
-
-.maskWindowText {
-  padding: 10rpx20rpx;
-  margin: 8rpx;
-  width: 50%;
-  font-size: 14px;
-  border-radius: 10rpx;
-}
-
-.maskWindowText_selected {
-  border: 1pxsolid#15c261;
-}
-
-.maskWindowText_unselected {
-  border: 1pxsolidlightgray;
-}
-
-.maskWindowInputView {
-  width: 80%;
-}
-
-.maskWindowInput {
-  margin: 15rpx0;
-  padding: 10rpx20rpx;
-  font-size: 14px;
-  border: 1pxsolidlightgray;
-  border-radius: 10rpx;
-}
-
-.maskWindowBtnView {
-  width: 80%;
-  margin-top: 20rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
-.maskWindowBtn {
-  padding: 10rpx50rpx;
-  margin: 20rpx;
-  font-size: 14px;
-  border-radius: 10rpx;
-  border: 1pxsolid#15c261;
-}
-
-.maskWindowTitleText {
-  padding: 10rpx 20rpx;
-  margin: 10rpx;
-  font: 16px;
-  width: 80%;
-}
-
-.maskWindowList {
-  width: 80%;
-  display: flex;
-  flex: row;
-}
-
-.maskWindowText {
-  padding: 10rpx 20rpx;
-  margin: 8rpx;
-  width: 50 %;
-  font: 14px;
-  border: 10rpx;
-}
-
-.maskWindowText_selected {
-  border: 1px solid #15c261;
-}
-
-.maskWindowText_unselected {
-  border: 1px solid lightgray;
-}
-
-.maskWindowInputView {
-  width: 80%;
-}
-
-.maskWindowInput {
-  margin: 15rpx 0;
-  padding: 10rpx 20rpx;
-  font: 14px;
-  border: 1px solid lightgray;
-  border: 10rpx;
-}
-
-.maskWindowBtnView {
-  width: 80%;
-  margin: 20rpx;
-  display: flex;
-  flex: row;
-  /* justify: flex-end; */
-}
-
-.maskWindowBtn {
-  padding: 10rpx 50rpx;
-  margin: 20rpx;
-  font: 14px;
-  border: 10rpx;
-  border: 1px solid #15c261;
+.weui-flex__item span {
+  font-size: 20px;
+  font-weight: 600;
 }

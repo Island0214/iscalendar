@@ -44,6 +44,18 @@ App({
       'week': arr_week[day.getDay()]
     }
   },
+  getFormatDate: function (str) {
+    var arr_week = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+    var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+    var day = new Date(str);
+    day.setTime(day.getTime());
+    return {
+      'day': day.getDate(),
+      'month': arr_month[day.getMonth()],
+      'year': day.getFullYear(),
+      'week': arr_week[day.getDay()]
+    }
+  },
   globalData: {
     userInfo: null,
     today: {}

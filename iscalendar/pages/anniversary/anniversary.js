@@ -10,51 +10,42 @@ Page({
       {
         id: 1,
         name: "纪念日1",       //纪念日名称
-        iconURL: "../../images/icon/item/item_running.png",          //指定图标
+        iconURL: "1.png",          //指定图标
         passDays: "5",    //已过时间
         createDate: "2019.01.01",       //纪念日创建日期
+        background: "#eeeeee"
       },
       {
         id: 2,
         name: "纪念日2",       //纪念日名称
-        iconURL: "../../images/icon/item/item_getup.png",          //指定图标
+        iconURL: "2.png",          //指定图标
         passDays: "2",    //已过时间
         createDate: "2018.01.02",       //纪念日创建日期
+        background: "#eeeeee"
       },
       {
         id: 3,
         name: "纪念日3",       //纪念日名称
-        iconURL: "../../images/icon/item/item_exercise.png",          //指定图标
+        iconURL: "3.png",          //指定图标
         passDays: "4",    //已过时间
         createDate: "2018.10.10",       //纪念日创建日期
+        background: "#eeeeee"
       },
       {
         id: 4,
         name: "纪念日4",       //纪念日名称
-        iconURL: "../../images/icon/item/item_study.png",          //指定图标
+        iconURL: "4.png",          //指定图标
         passDays: "1",    //已过时间
         createDate: "1999.09.11",       //纪念日创建日期
+        background: "#eeeeee"
       },
       {
         id: 5,
         name: "纪念日5",       //纪念日名称
-        iconURL: "../../images/icon/item/item_default.png",          //指定图标
+        iconURL: "5.png",          //指定图标
         passDays: "0",    //已过时间
         createDate: "2019.11.11",       //纪念日创建日期
-      },
-      {
-        id: 6,
-        name: "纪念日6",       //纪念日名称
-        iconURL: "../../images/icon/item/item_eating.png",          //指定图标
-        passDays: "0",    //已过时间
-        createDate: "2008.08.10",       //纪念日创建日期
-      },
-      {
-        id: 7,
-        name: "纪念日7",       //纪念日名称
-        iconURL: "../../images/icon/item/item_coding.png",          //指定图标
-        passDays: "4",    //已过时间
-        createDate: "2000.02.20",       //纪念日创建日期
+        background: "#eeeeee"
       },
     ],
     curID: 7,
