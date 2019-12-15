@@ -164,5 +164,19 @@ Page({
    * 日历初次渲染完成后触发事件，如设置事件标记
    */
   afterCalendarRender(e) {
+  },
+
+  toDateDetail:function(){
+    wx.navigateTo({
+      //url:"../dateDetail/dateDetail?week=" +  + "?month=" +  + "?day=" +
+      //此处需传入日期
+      url:"../dateDetail/dateDetail" 
+    })
+  },
+
+  toWriteDairy:function(){
+    wx.navigateTo({
+      url:"../writeDairy/writeDairy"
+    })
   }
 })

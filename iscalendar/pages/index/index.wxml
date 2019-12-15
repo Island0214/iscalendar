@@ -1,8 +1,8 @@
 <view class="page">
   <view class="page__bd page__bd_spacing body-wrapper">
-    <view class="weui-flex" class="today-wrapper">
+    <view class="weui-flex" class="today-wrapper" bindtap="toDateDetail">
       <view class="new-diary-btn">
-        <view class="add-btn">
+        <view class="add-btn" bindtap="toWriteDairy">
           +
         </view>
       </view>

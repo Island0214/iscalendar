@@ -1,0 +1,59 @@
+<!--index.wxml-->
+<!-- <view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+</view> -->
+<view class="page">
+  <!-- shang -->
+  <view class="weui-flex" class="date-block">
+    <!-- zuo -->
+    <view class="today-Date">
+      <!-- 'date' -->
+      <view>
+        <text style="font-size:13px;">Date</text>
+      </view>
+      <!-- week -->
+      <view>
+        <text style="font-size:22px;">{{week}},</text>
+      </view>
+      <!-- date -->
+      <view>
+        <text style="font-size:22px;">{{month}} {{day}}</text>
+      </view>
+    </view>
+    <!-- you -->
+    <view class="today-anniversary">
+      <!-- '当日纪念' -->
+      <view >
+        <text style="font-size:11px;">当日纪念</text>
+      </view>
+      <!-- 纪念项 -->
+      <view>
+        <text>无</text>
+      </view>
+      <!-- '当日打卡情况' -->
+      <view>
+        <text style="font-size:12px;">当日打卡情况</text>
+      </view>
+      <!-- 打卡情况 -->
+      <view>
+        <text>情况</text>
+      </view>
+    </view>
+  </view>
+  <!-- 当日日记 -->
+  <view  style="margin: 5px 5px 5px 10px;">
+    <h3>当日日记</h3>
+  </view>
+  <view class="text-diary">
+      <rich-text nodes="{{article_content}}"></rich-text>
+  </view>
+</view>

@@ -8,7 +8,9 @@
     "pages/addCheck/addCheck",
     "pages/addAnniversary/addAnniversary",
     "pages/anniversary/anniversary",
-    "pages/anniversary/anniversary_content/anniversary_content"
+    "pages/anniversary/anniversary_content/anniversary_content",
+    "pages/writeDairy/writeDairy",
+    "pages/dateDetail/dateDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
