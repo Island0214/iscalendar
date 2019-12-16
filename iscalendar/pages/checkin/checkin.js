@@ -6,6 +6,7 @@ Page({
    */
   data: {
     // 所有的打卡列表
+    // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
     checkinLists:[
       {
         id: '1232131',
@@ -13,7 +14,8 @@ Page({
         iconURL: '1.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        status: true, 
       },
       {
         id: '1232132',
@@ -21,7 +23,8 @@ Page({
         iconURL: '2.png',
         background: '#5626e530',
         stickDays: 2,
-        checked: true
+        checked: true,
+        status: true, 
       },
       {
         id: '1232133',
@@ -29,7 +32,8 @@ Page({
         iconURL: '3.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: true
+        checked: true,
+        status: true, 
       },
       {
         id: '1232134',
@@ -37,7 +41,8 @@ Page({
         iconURL: '4.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        status: true, 
       },
       {
         id: '1232135',
@@ -45,7 +50,17 @@ Page({
         iconURL: '5.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        status: true, 
+      },
+      {
+        id: '1232136',
+        name: '跑步(test_false)',
+        iconURL: '5.png',
+        background: '#d6c6de',
+        stickDays: 1,
+        checked: false,
+        status: false,
       }
     ],
     curID: 7,
@@ -58,8 +73,6 @@ Page({
     showInput: false, //控制输入栏
 
     isMaskWindowShow: false,
-    maskWindowList: ['时间太早', '时间太晚', '距离太远', '交通不方便', '其他（输入）', '没有原因'],
-    selectIndex: -1,
     isMaskWindowInputShow: false,
     maskWindowInputValue_title: "",
     maskWindowInputValue_content: "",
@@ -132,9 +145,12 @@ Page({
     console.log('点击具体打卡项')
     console.log(e)
     //实现界面的跳转
-    //TODO: 带参数跳转
     wx.navigateTo({
-      url: "./checkin_content/checkin_content?content=" + e.currentTarget.dataset.content
+      // 在这里传入参数字段：1.id, 2.content
+      // 示例：
+      // url: "./checkin_content/checkin_content?id=" + e.currentTarget.dataset.id 
+      url: "./checkin_content/checkin_content?id=" + e.currentTarget.dataset.id + "&content=" + e.currentTarget.dataset.content
+      //url: "./checkin_content/checkin_content?content=" + e.currentTarget.dataset.content
     })
   },
 

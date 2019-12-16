@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cur: '',
+    cur: '',        // 当前名称
+    cur_id: 0,      // 当前id
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -50,6 +51,7 @@ Page({
       'icon_edit': '../../../images/icon/icon_edit.png',
     },
 
+    //status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
     clocks: [
       {
         id: '1232131',
@@ -57,7 +59,8 @@ Page({
         image: '../../images/clock/1.png',
         background: '#d6c6de',
         days: 1,
-        checked: false
+        checked: false,
+        status: true, 
       },
       {
         id: '1232132',
@@ -65,7 +68,8 @@ Page({
         image: '../../images/clock/2.png',
         background: '#5626e530',
         days: 2,
-        checked: true
+        checked: true,
+        status: true,
       },
       {
         id: '1232133',
@@ -73,7 +77,8 @@ Page({
         image: '../../images/clock/3.png',
         background: '#d6c6de',
         days: 1,
-        checked: true
+        checked: true,
+        status: true,
       },
       {
         id: '1232134',
@@ -81,7 +86,8 @@ Page({
         image: '../../images/clock/4.png',
         background: '#d6c6de',
         days: 1,
-        checked: false
+        checked: false,
+        status: true,
       },
       {
         id: '1232135',
@@ -89,7 +95,8 @@ Page({
         image: '../../images/clock/5.png',
         background: '#d6c6de',
         days: 1,
-        checked: false
+        checked: false,
+        status: true,
       }
     ]
   },
@@ -105,9 +112,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("message: ", options.content)
+    console.log("message: ", options)
     this.setData({
       cur: options.content,
+      cur_id: options.id,
       today: app.globalData.today
     })
     if (app.globalData.userInfo) {

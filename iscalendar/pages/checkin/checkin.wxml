@@ -5,8 +5,8 @@
     </view>
   </view>
   <block wx:for="{{checkinLists}}" wx:for-item="item" wx:key="index">
-    <view class="kind-list__item" bindlongtap="onLongPressCard">
-      <view class="weui-flex kind-list__item-hd" data-content="{{item.name}}" bindtap='goDetails'>
+    <view class="kind-list__item" wx:if="{{item.status}}" bindlongtap="onLongPressCard">
+      <view class="weui-flex kind-list__item-hd" data-id="{{item.id}}" data-content="{{item.name}}" bindtap='goDetails'>
         <view class="kind-list-img-checkin" style="background: {{item.background}}">
           <image class="kind-list__icon" src="../../images/clock/{{item.iconURL}}" />
         </view>
