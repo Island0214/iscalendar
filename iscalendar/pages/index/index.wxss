@@ -51,16 +51,6 @@
   padding: 5px 15px;
 }
 
-.weui-grids {
-  border: none;
-}
-
-.weui-grid {
-  border: none;
-  text-align: center;
-  padding: 5px;
-}
-
 .new-diary-btn {
   position: absolute;
   right: -50px;

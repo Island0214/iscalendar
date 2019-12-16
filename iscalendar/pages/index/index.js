@@ -29,14 +29,14 @@ Page({
       'year': '',
       'week': ''
     },
-    clocks: [
-      {
+    clocks: [{
         id: '1232131',
         name: '跑步',
         iconURL: '1.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        show: true,
       },
       {
         id: '1232132',
@@ -44,7 +44,8 @@ Page({
         iconURL: '2.png',
         background: '#5626e530',
         stickDays: 2,
-        checked: true
+        checked: true,
+        show: true,
       },
       {
         id: '1232133',
@@ -52,7 +53,8 @@ Page({
         iconURL: '3.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: true
+        checked: true,
+        show: true,
       },
       {
         id: '1232134',
@@ -60,7 +62,8 @@ Page({
         iconURL: '4.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        show: true,
       },
       {
         id: '1232135',
@@ -68,7 +71,8 @@ Page({
         iconURL: '5.png',
         background: '#d6c6de',
         stickDays: 1,
-        checked: false
+        checked: false,
+        show: true,
       }
     ]
   },
@@ -78,7 +82,7 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function() {
     this.setData({
       today: app.globalData.today
     })
@@ -87,7 +91,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -118,12 +122,15 @@ Page({
     })
   },
   /**
-  * 选择日期后执行的事件
-  * currentSelect 当前点击的日期
-  * allSelectedDays 选择的所有日期（当mulit为true时，allSelectedDays有值）
-  */
+   * 选择日期后执行的事件
+   * currentSelect 当前点击的日期
+   * allSelectedDays 选择的所有日期（当mulit为true时，allSelectedDays有值）
+   */
   afterTapDay(e) {
-    console.log('afterTapDay', e.detail); // => { currentSelect: {}, allSelectedDays: [] }
+    // console.log('afterTapDay', e.detail); // => { currentSelect: {}, allSelectedDays: [] }
+    wx.navigateTo({
+      url: '../dateDetail/dateDetail?year=' + e.detail.year + "&month=" + e.detail.month + "&day=" + e.detail.day
+    })
   },
   /**
    * 当日历滑动时触发(适用于周/月视图)
@@ -158,25 +165,28 @@ Page({
    * currentSelect 当前点击的日期
    */
   onTapDay(e) {
+    var date = app.getFormatDate(e.datail.year + '-' + e.datail.month + '-' + e.datail.day);
+    wx.navigateTo({
+      url: '../dateDetail/dateDetail?week=' + date.week + "&month=" + date.month + "&day=" + date.day 
+    })
     console.log('onTapDay', e.detail); // => { year: 2019, month: 12, day: 3, ...}
   },
   /**
    * 日历初次渲染完成后触发事件，如设置事件标记
    */
-  afterCalendarRender(e) {
-  },
+  afterCalendarRender(e) {},
 
-  toDateDetail:function(e){
+  toDateDetail: function(e) {
     wx.navigateTo({
-      url:"../dateDetail/dateDetail?week=" + e.currentTarget.dataset.content.week + "&month=" + e.currentTarget.dataset.content.month + "&day=" + e.currentTarget.dataset.content.day
+      url: "../dateDetail/dateDetail?week=" + e.currentTarget.dataset.content.week + "&month=" + e.currentTarget.dataset.content.month + "&day=" + e.currentTarget.dataset.content.day
       //此处需传入日期
       // url:"../dateDetail/dateDetail" 
     })
   },
 
-  toWriteDairy:function(){
+  toWriteDairy: function() {
     wx.navigateTo({
-      url:"../writeDairy/writeDairy"
+      url: "../writeDairy/writeDairy"
     })
   }
 })

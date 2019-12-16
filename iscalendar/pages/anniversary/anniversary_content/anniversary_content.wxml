@@ -1,20 +1,20 @@
 <!--pages/anniversary/anniversary_content/anniversary_content.wxml-->
 <view class="page">
   <view class="page__bd page__bd_spacing body-wrapper" style="padding-bottom: 0">
-    <view class="ann_item">
-        <view class="itemInner">
-          <view class="item_left">
-            <text class="item_leftTextName">纪念日</text>
-            <text class="item_leftTextWeek">{{date.week}},</text>
-            <text class="item_leftTextMonthDay">{{date.month}} {{date.day}}</text>
+    <view class="overview-item">
+        <view class="item-inner">
+          <view class="item-left">
+            <text class="item-left-name">{{date.year}}</text>
+            <text class="item-left-week">{{date.week}},</text>
+            <text class="item-left-date">{{date.month}} {{date.day}}</text>
           </view>
-          <view class="item_right">
-            <text class='item_rightText_gray'>事件名</text>
-            <text class='item_rightText'>{{AnniversaryDetails.timeName}}</text>
-            <text class='item_rightText_gray'>纪念日期</text>
-            <text class='item_rightText'>{{AnniversaryDetails.date}}</text>
-            <text class='item_rightText_gray'>已过天数</text>
-            <text class='item_rightText'>{{AnniversaryDetails.passDay}}</text>
+          <view class="item-right">
+            <text class='item-right-name'>事件名</text>
+            <text class='item-right-text'>{{AnniversaryDetails.timeName}}</text>
+            <text class='item-right-name'>纪念日期</text>
+            <text class='item-right-text'>{{AnniversaryDetails.date}}</text>
+            <text class='item-right-name'>已过天数</text>
+            <text class='item-right-text'>{{AnniversaryDetails.passDay}}</text>
           </view>
         </view>
     </view>

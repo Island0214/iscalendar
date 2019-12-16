@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "日期详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "clock": "/components/clock/clock"
+  }
 }

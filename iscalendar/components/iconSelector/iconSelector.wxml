@@ -14,28 +14,29 @@
           </view>
         </view>
       </view>
-    </view>
-    <scroll-view scroll-x="true" enable-flex="true">
-      <view class="weui-grids kind-list__item-hd">
-        <block wx:for="{{icons}}" wx:key="*this">
-          <view class="weui-grid" wx:if="{{displays[index]}}">
-            <view class="single-icon-wrapper {{item == imageUrl ? 'selected-item': ''}}" bindtap="clickClock" data-item="{{item}}">
-              <image src="../../images/clock/{{item}}"></image>
+      <scroll-view scroll-x="true" enable-flex="true">
+        <view class="weui-grids kind-list__item-hd">
+          <block wx:for="{{icons}}" wx:key="*this">
+            <view class="weui-grid" wx:if="{{displays[index]}}">
+              <view class="single-icon-wrapper {{item == imageUrl ? 'selected-item': ''}}" bindtap="clickClock" data-item="{{item}}">
+                <image src="../../images/clock/{{item}}"></image>
+              </view>
             </view>
-          </view>
-        </block>
-      </view>
-    </scroll-view>
+          </block>
+        </view>
+      </scroll-view>
 
-    <scroll-view scroll-x="true" enable-flex="true">
-      <view class="weui-grids kind-list__item-hd">
-        <block wx:for="{{colors}}" wx:key="*this">
-          <view class="weui-grid">
-            <view class="single-color-wrapper {{item == backgroundColor ? 'selected-item': ''}}" style="background-color: {{item}}" bindtap="clickColor" data-item="{{item}}">
+      <scroll-view scroll-x="true" enable-flex="true">
+        <view class="weui-grids kind-list__item-hd">
+          <block wx:for="{{colors}}" wx:key="*this">
+            <view class="weui-grid">
+              <view class="single-color-wrapper {{item == backgroundColor ? 'selected-item': ''}}" style="background-color: {{item}}" bindtap="clickColor" data-item="{{item}}">
+              </view>
             </view>
-          </view>
-        </block>
-      </view>
-    </scroll-view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+
   </view>
 </view>

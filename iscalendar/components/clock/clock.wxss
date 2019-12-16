@@ -1,7 +1,7 @@
 /* components/clock/clock.wxss */
 .clock-wrapper {
   background-color: #FFFFFF;
-  min-height: 115px;
+  min-height: 117px;
   padding: 10px 5px;
   border-radius: 3px;
   overflow: visible;
