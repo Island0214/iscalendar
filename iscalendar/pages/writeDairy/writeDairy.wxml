@@ -13,7 +13,7 @@
   <view style="margin: 5px 5px 5px 10px;">
       <h2>图片上传</h2>
     </view>
-  <view class="upload-image" hover-class="btn-hover" bindtap="addImage">
+  <view class="upload-image" hover-class="btn-hover" bindtap="insertImage">
     <image class="picture" src="../../images/icon/加号2.png"></image>
   </view>
   <view class="dairy-button">
