@@ -11,7 +11,23 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     readOnly: false,
     editorHeight: 300,
     keyboardHeight: 0,
-    isIOS: false
+    isIOS: false,
+
+    content: '',
+    content_html: '',
+    placeholder: '开始输入...',
+    isReadOnly: false,
+    nodes: [{
+      name: 'div',
+      attrs: {
+        class: 'div_class',
+        style: 'line-height: 60px; color: red;'
+      },
+      children: [{
+        type: 'text',
+        text: 'RichText组件'
+      }]
+    }]
   },
   //事件处理函数
   readOnlyChange() {
@@ -56,11 +72,33 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     return statusBarHeight + navigationBarHeight
   },
   onEditorReady() {
+    //输入-编辑框
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
-      that.editorCtx = res.context
+      that.editorCtx = res.context;
+      if (wx.getStorageSync("content")) { // 设置~历史值
+        that.editorCtx.insertText(wx.getStorageSync("content")) // 注意：插入的是对象
+      }
     }).exec()
   },
+  // 获取内容
+  onContentChange(e) {
+    this.setData({
+      content: e.detail,
+    })
+    wx.setStorageSync("content",e.detail)
+  },
+  // 显示结果
+  clickSaveText(e) {
+    this.setData({
+      nodes: this.data.content.html,
+      content_html: this.data.content.html
+    })
+  },
+  // //保存并上传结果
+  // clickSaveText(e) {
+    
+  // },
   blur() {
     this.editorCtx.blur()
   },
@@ -117,5 +155,41 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
         })
       }
     })
+  },
+
+  addImage() {
+    const that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        console.log(res.tempFilePaths,'上传图片')
+        wx.uploadFile({
+          url: '自己的图片上传地址',
+          filePath: res.tempFilePaths[0],
+          name: 'file',
+          formData: {
+            app_token: app.data.userInfo.app_token,
+          },
+          success: function (res) {
+            console.log(res.data,'图片上传之后的数据')
+            var data = JSON.parse(res.data)
+            console.log(data.data.url)
+            that.editorCtx.insertImage({
+              src: data.data.url,
+              success: function () {
+                console.log('insert image success')
+              }
+            })
+          }
+        }) 
+      }
+    })
+  },
+
+  returnLastPage:function(){
+    wx.navigateBack()
   }
+  
 })

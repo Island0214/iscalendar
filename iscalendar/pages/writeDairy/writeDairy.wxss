@@ -7,7 +7,14 @@
   box-shadow:0px 3px 5px 1px #cecdcc99;
   border: 3px 3px 3px 3px rgba(85, 84, 84, 0.667);
 }
-
+.rich-content{
+  margin: 5px 5px 5px 5px;
+  display: flex;
+  height: 300px;
+  width: 300px;
+  background-color: #ffff;
+  box-shadow:0px 3px 5px 1px #cecdcc99;
+}
 
 .ql-container {
   box-sizing: border-box;
@@ -69,6 +76,8 @@
   margin: 5px 5px 5px 5px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items:center;  
   float: right;
   border-radius: 3px 3px 3px 3px;
 }
@@ -92,4 +101,16 @@
   color: rgb(238, 135, 135);
   background-color: #ffff;
   
+}
+
+.btn-hover{
+  position: relative;
+  top: 3rpx;
+  box-shadow:0px 0px 8px #999 inset; 
+}
+
+.plain-hover{
+  position: relative;
+  top: 3rpx;
+  box-shadow:0px 0px 10px #bbbec4 inset; 
 }

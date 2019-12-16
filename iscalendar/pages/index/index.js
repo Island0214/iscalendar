@@ -166,11 +166,11 @@ Page({
   afterCalendarRender(e) {
   },
 
-  toDateDetail:function(){
+  toDateDetail:function(e){
     wx.navigateTo({
-      //url:"../dateDetail/dateDetail?week=" +  + "?month=" +  + "?day=" +
+      url:"../dateDetail/dateDetail?week=" + e.currentTarget.dataset.content.week + "&month=" + e.currentTarget.dataset.content.month + "&day=" + e.currentTarget.dataset.content.day
       //此处需传入日期
-      url:"../dateDetail/dateDetail" 
+      // url:"../dateDetail/dateDetail" 
     })
   },
 

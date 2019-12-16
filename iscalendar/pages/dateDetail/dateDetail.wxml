@@ -54,6 +54,6 @@
     <h3>当日日记</h3>
   </view>
   <view class="text-diary">
-      <rich-text nodes="{{article_content}}"></rich-text>
+      <rich-text nodes="{{content}}"></rich-text>
   </view>
 </view>

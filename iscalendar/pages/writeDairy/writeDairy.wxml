@@ -5,7 +5,7 @@
       <h2>日记内容</h2>
     </view>
     <view class="dairy-content">
-      <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady">
+      <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="onContentChange">
       </editor>
     </view>
   </view>
@@ -13,11 +13,14 @@
   <view style="margin: 5px 5px 5px 10px;">
       <h2>图片上传</h2>
     </view>
-  <view class="upload-image">
+  <view class="upload-image" hover-class="btn-hover" bindtap="addImage">
     <image class="picture" src="../../images/icon/加号2.png"></image>
   </view>
   <view class="dairy-button">
-    <button class="dairy-cancel">×</button>
-    <button class="dairy-enter">√</button>
+    <button class="dairy-cancel" hover-class="btn-hover" bindtap="returnLastPage">×</button>
+    <button class="dairy-enter" hover-class="plain-hover" bindtap="clickSaveText">√</button>
   </view>
+  <!-- <view class="rich-content">
+    <rich-text nodes="{{nodes}}"></rich-text>
+  </view> -->
 </view>
