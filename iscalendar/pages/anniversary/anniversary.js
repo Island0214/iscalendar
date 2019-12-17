@@ -8,7 +8,7 @@ Page({
     // 所有的打卡列表
     anniversaryLists: [
       {
-        id: 1,
+        id: '1232131',
         name: "纪念日1",       //纪念日名称
         iconURL: "1.png",          //指定图标
         passDays: "5",    //已过时间
@@ -16,7 +16,7 @@ Page({
         background: "#eeeeee"
       },
       {
-        id: 2,
+        id: '1232132',
         name: "纪念日2",       //纪念日名称
         iconURL: "2.png",          //指定图标
         passDays: "2",    //已过时间
@@ -24,7 +24,7 @@ Page({
         background: "#eeeeee"
       },
       {
-        id: 3,
+        id: '1232133',
         name: "纪念日3",       //纪念日名称
         iconURL: "3.png",          //指定图标
         passDays: "4",    //已过时间
@@ -32,7 +32,7 @@ Page({
         background: "#eeeeee"
       },
       {
-        id: 4,
+        id: '1232134',
         name: "纪念日4",       //纪念日名称
         iconURL: "4.png",          //指定图标
         passDays: "1",    //已过时间
@@ -40,7 +40,7 @@ Page({
         background: "#eeeeee"
       },
       {
-        id: 5,
+        id: '1232135',
         name: "纪念日5",       //纪念日名称
         iconURL: "5.png",          //指定图标
         passDays: "0",    //已过时间
@@ -48,6 +48,15 @@ Page({
         background: "#eeeeee"
       },
     ],
+
+    /* 左滑删除按钮 */
+    slideButtons: [{
+      type: 'warn',
+      text: '删除',
+      extClass: 'test',
+      src: '/images/icon/slide_icon/icon_del.svg', // icon的路径
+    }],
+
     curID: 7,
     Image_addItem_URL: "../../images/icon/icon_add.png",
     Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
@@ -239,6 +248,37 @@ Page({
       selectIndex: -1,
       isMaskWindowInputShow: false,
       maskWindowInputValue: ""
+    })
+  },
+
+  // 响应滑动按钮事件
+  slideButtonTap(e) {
+    console.log('slide button tap', e.detail);
+    var that = this;
+
+    // 模态弹窗确定是否要删除
+    wx.showModal({
+      title: '确定删除',
+      content: '是否确定删除该纪念日？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log("删除id:", e.currentTarget.dataset.id);
+          // 删除这个id项
+          var del_ID = e.currentTarget.dataset.id;
+          var list = that.data.anniversaryLists;
+          for (var i = 0; i < list.length; i++) {
+            console.log("cur id:", list[i].id)
+            console.log("del id:", del_ID)
+            if (list[i].id === del_ID) {
+              list.splice(i, 1);
+            }
+          }
+          // 重新刷新数组
+          that.setData({
+            anniversaryLists: list
+          });
+        }
+      }
     })
   },
 

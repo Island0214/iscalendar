@@ -4,7 +4,10 @@
       <h4>还没有设置打卡事项...</h4>
     </view>
   </view>
+  <!-- 左滑删除功能加入 -->
+  <view class="weui-slidecells">
   <block wx:for="{{anniversaryLists}}" wx:for-item="item" wx:key="index">
+  <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap" data-id="{{item.id}}">
     <view class="kind-list__item" bindlongtap="onLongPressCard">
       <view class="weui-flex kind-list__item-hd" data-content="{{item.name}}" bindtap='goDetails'>
         <view class="kind-list-img-checkin" style="background: {{item.background}}">
@@ -16,7 +19,9 @@
         </view>
       </view>
     </view>
+    </mp-slideview>
   </block>
+  </view>
 </view>
 
 <!--添加打卡项[图片]-->
