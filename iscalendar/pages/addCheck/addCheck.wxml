@@ -8,12 +8,12 @@
             <h4>给该打卡项命名：</h4>
           </view>
           <view class="weui-flex__item" style="text-align: right;">
-            <button class="weui-btn" type="primary" size="mini">保存</button>
+            <button class="weui-btn" type="primary" size="mini" bindtap="onClickSave">保存</button>
           </view>
         </view>
         <view class="weui-flex kind-list__item-hd">
           <view class="weui-flex__item">
-            <input class="weui-input my-input" placeholder="例如跑步、早起等" value="{{phone}}" />
+            <input class="weui-input my-input" placeholder="例如跑步、早起等" value="{{phone}}" bindinput='onInput_title'/>
           </view>
         </view>
       </view>
@@ -30,12 +30,12 @@
         </view>
         <view class="weui-flex kind-list__item-hd">
           <view class="weui-flex__item">
-            <input class="weui-input my-input" placeholder="坚持就是胜利！" value="{{phone}}" />
+            <input class="weui-input my-input" placeholder="坚持就是胜利！" value="{{phone}}" bindinput='onInput_content'/>
           </view>
         </view>
       </view>
     </view>
   </view>
-  <iconSelector></iconSelector>
+  <iconSelector id="iconSelector"></iconSelector>
 
 </view>
