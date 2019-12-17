@@ -171,6 +171,20 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
         that.setData({
           files: that.data.files.concat(res.tempFilePaths)
         });
+        var i=0;
+        for(;i<res.tempFilePaths.length;i++){
+          that.editorCtx.insertImage({
+            src: res.tempFilePaths[i],
+            data: {
+              id: 'abcd' + i,
+              role: 'god'
+            },
+            width: '90%',
+            success: function () {
+              console.log('insert image success')
+            }
+          })
+        }
       }
     })
   },

@@ -40,5 +40,6 @@
   </view>
   <!-- <view class="rich-content">
     <rich-text nodes="{{nodes}}"></rich-text>
+    <text>{{content_html}}</text>
   </view> -->
 </view>
