@@ -51,7 +51,7 @@
 }
 
 .text-diary{
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   background-color: #ffff;  
   box-sizing: border-box;
@@ -107,4 +107,9 @@
   width: 60px;
   border-radius: 50%;
   background-color: #FFFFFF; 
+}
+
+.weui-uploader__img {
+  border: 2px solid #666666;
+  margin: 0px 10px 10px 0;
 }

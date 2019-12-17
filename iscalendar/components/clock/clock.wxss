@@ -5,6 +5,8 @@
   padding: 10px 5px;
   border-radius: 3px;
   overflow: visible;
+  box-shadow: 0px 3px 5px 1px #cecdcc99;
+  border: 3px 3px 3px 3px rgba(85, 84, 84, 0.667);
 }
 
 .weui-grid__icon {

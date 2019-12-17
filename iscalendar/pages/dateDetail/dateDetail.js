@@ -78,7 +78,8 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
         background: "#eeeeee",
         description: '2个月纪念'
       },
-    ]
+    ],
+    files: ['../../images/clock/1.png', '../../images/clock/2.png']
   },
   //事件处理函数
   bindViewTap: function() {
@@ -167,6 +168,12 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
   getArticleInfo: function(id) {
 
 
+  },
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.files // 需要预览的图片http链接列表
+    })
   }
 
 })

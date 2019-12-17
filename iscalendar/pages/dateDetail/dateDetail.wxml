@@ -71,8 +71,23 @@
   <view class="page__bd page__bd_spacing">
     <h3>当日日记</h3>
     <view class="text-diary">
-      <h6 wx:if="{{content.length == 0}}">当日未编写日记...</h6>
-      <rich-text nodes="{{content}}"></rich-text>
+      <h6 wx:if="{{content.length == 0 && files.length == 0}}">当日未编写日记...</h6>
+      <view class="weui-flex">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{files}}" wx:key="*this">
+                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-flex">
+        <rich-text nodes="{{content}}"></rich-text>
+      </view>
     </view>
   </view>
 
