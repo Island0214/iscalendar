@@ -63,6 +63,22 @@ Page({
         status: false,
       }
     ],
+    // slideButtons: [{
+    //   text: '普通',
+    //   src: '/images/icon/slide_icon/icon_love.svg', // icon的路径
+    // }, {
+    //   text: '普通',
+    //   extClass: 'test',
+    //   src: '/images/icon/slide_icon/icon_star.svg', // icon的路径
+    // }, {
+  
+    /* 左滑删除按钮 */
+    slideButtons: [{
+      type: 'warn',
+      text: '删除',
+      extClass: 'test',
+      src: '/images/icon/slide_icon/icon_del.svg', // icon的路径
+    }],
     curID: 7,
     Image_addItem_URL: "../../images/icon/icon_add.png",
     Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
@@ -263,5 +279,36 @@ Page({
     })
   },
 
+  // 响应滑动按钮事件
+  slideButtonTap(e) {
+    console.log('slide button tap', e.detail);
+    var that = this;
+
+    // 模态弹窗确定是否要删除
+    wx.showModal({
+      title: '确定删除',
+      content: '是否确定删除该打卡项？',
+      success: function (res) {
+        if(res.confirm){
+          console.log("删除id:", e.currentTarget.dataset.id);
+          // 删除这个id项
+          var del_ID = e.currentTarget.dataset.id;
+          var list = that.data.checkinLists;
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === del_ID) {
+              list.splice(i, 1);
+            }
+          }
+          // 重新刷新数组
+          that.setData({
+            checkinLists: list
+          });
+        }
+      }
+    })
+
+
+    
+  },
 
 })
