@@ -10,7 +10,8 @@
     "pages/anniversary/anniversary",
     "pages/anniversary/anniversary_content/anniversary_content",
     "pages/writeDairy/writeDairy",
-    "pages/dateDetail/dateDetail"
+    "pages/dateDetail/dateDetail",
+    "pages/login/login"
   ],
   "window": {
     "backgroundTextStyle": "light",
