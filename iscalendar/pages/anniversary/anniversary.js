@@ -5,7 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isNetworkOn: true,
     // 所有的打卡列表
+    // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
+    
     anniversaryLists: [
       {
         id: '1232131',
@@ -13,7 +16,8 @@ Page({
         iconURL: "1.png",          //指定图标
         passDays: "5",    //已过时间
         createDate: "2019.01.01",       //纪念日创建日期
-        background: "#eeeeee"
+        background: "#eeeeee",
+         status: true
       },
       {
         id: '1232132',
@@ -21,7 +25,8 @@ Page({
         iconURL: "2.png",          //指定图标
         passDays: "2",    //已过时间
         createDate: "2018.01.02",       //纪念日创建日期
-        background: "#eeeeee"
+        background: "#eeeeee",
+        status: true,
       },
       {
         id: '1232133',
@@ -29,7 +34,8 @@ Page({
         iconURL: "3.png",          //指定图标
         passDays: "4",    //已过时间
         createDate: "2018.10.10",       //纪念日创建日期
-        background: "#eeeeee"
+        background: "#eeeeee",
+        status: true,
       },
       {
         id: '1232134',
@@ -37,7 +43,8 @@ Page({
         iconURL: "4.png",          //指定图标
         passDays: "1",    //已过时间
         createDate: "1999.09.11",       //纪念日创建日期
-        background: "#eeeeee"
+        background: "#eeeeee",
+        status: true,
       },
       {
         id: '1232135',
@@ -45,7 +52,8 @@ Page({
         iconURL: "5.png",          //指定图标
         passDays: "0",    //已过时间
         createDate: "2019.11.11",       //纪念日创建日期
-        background: "#eeeeee"
+        background: "#eeeeee",
+        status: true,
       },
     ],
 
@@ -57,10 +65,10 @@ Page({
       src: '/images/icon/slide_icon/icon_del.svg', // icon的路径
     }],
 
-    curID: 7,
-    Image_addItem_URL: "../../images/icon/icon_add.png",
-    Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
-    Details_Page_URL: "./checkin_content/checkin_content",
+    // curID: 7,
+    // Image_addItem_URL: "../../images/icon/icon_add.png",
+    // Image_checkinItem_URL: "../../images/icon/icon_checkin_item.png",
+    // Details_Page_URL: "./checkin_content/checkin_content",
 
     //是否需要隐藏弹窗
     hiddenModalPut: true,
@@ -78,7 +86,51 @@ Page({
   * 生命周期函数--监听页面加载
   */
   onLoad: function (options) {
+    this.getDatabaseData();
+  },
+  getDatabaseData: function () {
+    // 读取数据库内容
+    // 传入：用户id
+    // 传出：该用户的所有纪念日项列表
+    var that = this;
+    if (this.data.isNetworkOn) {
+      var arr = new Array();
+      wx.request({
+        //url: "https://172.19.241.77:8080/project/user/getUserInfo",//url中接口前面加一下project项目名
+        url: "https://172.19.241.77:443/project/anniversary/getAnniversariesAllByUser",
+        method: "POST",
+        dataType: 'JSON',
+        header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: {
+          user_id: "1",
+        },
+        success: (res) => {
+          console.log("用户的所有纪念日如下：", res.data)
+          var item = JSON.parse(res.data);
+          var i = 0;
+          for (i = 0; i < item.length; i++) {
+            var tmp = item[i];
+            console.log(tmp.id);
+            var obj = {
+              id: tmp.id,
+              name: tmp.anniversary_name,       //纪念日名称
+              iconURL: tmp.icon_url,          //指定图标
+              passDays: tmp.distday,    //已过时间
+              createDate: tmp.create_at,       //纪念日创建日期
+              background: tmp.background,
+              status: true,
+            };
+            console.log(obj);
+            arr.push(obj);
+          }
 
+          // 重新刷新数组
+          this.setData({
+            anniversaryLists: arr
+          });
+        }
+      })
+    }
   },
 
   /**
@@ -137,14 +189,15 @@ Page({
   },
 
 
-  //跳转到打卡详情界面
+  //跳转到纪念日详情界面
   goDetails: function (e) {
     //实现界面的跳转
     console.log('点击纪念日详情')
     console.log(e)
     //TODO: 带参数跳转
     wx.navigateTo({
-      url:'/pages/anniversary/anniversary_content/anniversary_content'
+      // url:'/pages/anniversary/anniversary_content/anniversary_content'
+      url: "./anniversary_content/anniversary_content?id=" + e.currentTarget.dataset.id + "&content=" + e.currentTarget.dataset.content
     })
   },
 
@@ -263,20 +316,34 @@ Page({
       success: function (res) {
         if (res.confirm) {
           console.log("删除id:", e.currentTarget.dataset.id);
-          // 删除这个id项
-          var del_ID = e.currentTarget.dataset.id;
-          var list = that.data.anniversaryLists;
-          for (var i = 0; i < list.length; i++) {
-            console.log("cur id:", list[i].id)
-            console.log("del id:", del_ID)
-            if (list[i].id === del_ID) {
-              list.splice(i, 1);
+          // // 删除这个id项
+          // var del_ID = e.currentTarget.dataset.id;
+          // var list = that.data.anniversaryLists;
+          // for (var i = 0; i < list.length; i++) {
+          //   console.log("cur id:", list[i].id)
+          //   console.log("del id:", del_ID)
+          //   if (list[i].id === del_ID) {
+          //     list.splice(i, 1);
+          //   }
+          // }
+          // // 重新刷新数组
+          // that.setData({
+          //   anniversaryLists: list
+          // });
+
+          wx.request({
+            url: "https://172.19.241.77:443/project/anniversary/deleteAnniversary",
+            method: "POST",
+            dataType: 'JSON',
+            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: {
+              id: e.currentTarget.dataset.id
+            },
+            success: function (res) {
+              console.log(res.data);
             }
-          }
-          // 重新刷新数组
-          that.setData({
-            anniversaryLists: list
-          });
+          })
+          that.getDatabaseData();
         }
       }
     })
