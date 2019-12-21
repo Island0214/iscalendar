@@ -19,9 +19,9 @@ Page({
        * 初始化日历时指定默认选中日期，如：'2018-3-6' 或 '2018-03-06'
        * 初始化时不默认选中当天，则将该值配置为false。
        */
-      multi: false, // 是否开启多选,
+      multi: true, // 是否开启多选,
       highlightToday: true, // 是否高亮显示当天，区别于选中样式（初始化时当天高亮并不代表已选中当天）
-      takeoverTap: false, // 是否完全接管日期点击事件（日期不会选中），配合 onTapDay() 使用
+      takeoverTap: true, // 是否完全接管日期点击事件（日期不会选中），配合 onTapDay() 使用
       disablePastDay: false, // 是否禁选当天之前的日期
       disableLaterDay: true, // 是否禁选当天之后的日期
       firstDayOfWeek: 'Mon', // 每周第一天为周一还是周日，默认按周日开始
@@ -119,6 +119,8 @@ Page({
       cur_id: options.id,
       today: app.globalData.today
     })
+    // 日历：禁止选择日期
+    //console.log(this.calendar)
 
     // 获取此打卡项数据
     var that = this;
@@ -282,6 +284,39 @@ Page({
    * 日历初次渲染完成后触发事件，如设置事件标记
    */
   afterCalendarRender(e) {
+    /* 多选所有的已打卡日期 */
+    // 请求获取数据库此打卡项的所有打卡日期
+    var checkinList = new Array();
+    var that = this;
+    wx.request({
+      url: "https://172.19.241.77:443/project/checkin/getMonthCheckin",
+      method: "POST",
+      dataType: 'JSON',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: {
+        //id: that.data.cur_id
+        user_id: "3",
+        this_month: "2019-12"
+      },
+      success: function (res) {
+        var tmpList = JSON.parse(res.data);
+        // 进行深度拷贝
+        var ll = new Array();
+        var i = 0;
+        for (i = 0; i < tmpList.length; i++){    
+          let split1 = tmpList[i].checkin_date.trim().split(" ")[0];
+          let split2 = split1.trim().split("-");
+          var obj = {
+            year: split2[0],
+            month: split2[1],
+            day: split2[2],
+          }
+          checkinList.push(obj);
+        }
+        console.log("checkinlist1", checkinList)
+        that.calendar.setSelectedDays(checkinList)
+      }
+    })
   },
 
   //按下删除图标
