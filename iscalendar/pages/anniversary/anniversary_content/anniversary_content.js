@@ -3,6 +3,7 @@ const app = getApp()
 Page({
   data: {
     cur: '',
+    cur_id: 0,
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -32,11 +33,41 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("message: ", options.content)
+    console.log("message: ", options)
     this.setData({
       cur: options.content,
+      cur_id: options.id,
       today: app.globalData.today
     })
+    // 获取此纪念日详情数据
+    var that = this;
+    wx.request(
+      {
+      url: "https://172.19.241.77:443/project/anniversary/getAnniversaryByID",
+      method: "POST",
+      dataType: 'JSON',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: {
+        id: this.data.cur_id
+      },
+      success: function (res) {
+        console.log(res.data);
+        var item = JSON.parse(res.data);
+        var obj = {
+          date: item.anniversary,      //计划天数
+          timeName: item.anniversary_name,      //打卡天数
+          passDay: item.restday,       //错过天数
+          nextAnniversary: item.restday, //总计打卡天数
+          type: item.anniversary_type, //当前连续时长
+          description: item.anniversary_description, //最大连续时长
+         
+        }
+        that.setData({
+          AnniversaryDetails: obj,
+        })
+      },
+    })
+    console.log(this.data.AnniversaryDetails.date);
     this.setData({
       date: app.getFormatDate(this.data.AnniversaryDetails.date)
     })
@@ -120,6 +151,37 @@ Page({
   //按下删除图标
   onClickDelete: function (e) {
     console.log("按下了删除图标");
+    var pages = getCurrentPages();            //得到界面栈
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    var that = this;
+    wx.showModal({
+      title: '确定删除',
+      content: '是否确定删除该打卡项？',
+      success: function (res) {
+        if (res.confirm) {
+          // 删除此打卡项
+          wx.request({
+            url: "https://172.19.241.77:443/project/anniversary/deleteAnniversary",
+            method: "POST",
+            dataType: 'JSON',
+            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: {
+              id: that.data.cur_id
+            },
+            success: function (res) {
+              console.log(res.data);
+              // 父层界面进行刷新
+              prevPage.getDatabaseData();
+
+              wx.navigateBack({
+                delta: 1
+              });
+            }
+          })
+        }
+      }
+    })
   },
 
 })
