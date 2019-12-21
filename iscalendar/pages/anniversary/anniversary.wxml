@@ -8,8 +8,8 @@
   <view class="weui-slidecells">
   <block wx:for="{{anniversaryLists}}" wx:for-item="item" wx:key="index">
   <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap" data-id="{{item.id}}">
-    <view class="kind-list__item" bindlongtap="onLongPressCard">
-      <view class="weui-flex kind-list__item-hd" data-content="{{item.name}}" bindtap='goDetails'>
+    <view class="kind-list__item" wx:if="{{item.status}}" bindlongtap="onLongPressCard">
+      <view class="weui-flex kind-list__item-hd" data-id="{{item.id}}" data-content="{{item.name}}" bindtap='goDetails'>
         <view class="kind-list-img-checkin" style="background: {{item.background}}">
           <image class="kind-list__icon" src="../../images/clock/{{item.iconURL}}" />
         </view>
@@ -22,10 +22,4 @@
     </mp-slideview>
   </block>
   </view>
-</view>
-
-<!--添加打卡项[图片]-->
-<view class="page__ft">
-  <!-- 添加打卡项内容 -->
-  <view class="full-btn" bindtap="addAnniversary">+ 添加一个纪念日</view>
 </view>
