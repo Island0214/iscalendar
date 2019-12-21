@@ -1,13 +1,18 @@
 // pages/checkin/checkin.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    // 是否开启网络功能（Debug）
+    isNetworkOn: true,
+
     // 所有的打卡列表
     // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
-    checkinLists:[
+    checkinLists: [
       {
         id: '1232131',
         name: '跑步',
@@ -15,7 +20,7 @@ Page({
         background: '#d6c6de',
         stickDays: 1,
         checked: false,
-        status: true, 
+        status: true,
       },
       {
         id: '1232132',
@@ -24,7 +29,7 @@ Page({
         background: '#5626e530',
         stickDays: 2,
         checked: true,
-        status: true, 
+        status: true,
       },
       {
         id: '1232133',
@@ -33,7 +38,7 @@ Page({
         background: '#d6c6de',
         stickDays: 1,
         checked: true,
-        status: true, 
+        status: true,
       },
       {
         id: '1232134',
@@ -42,7 +47,7 @@ Page({
         background: '#d6c6de',
         stickDays: 1,
         checked: false,
-        status: true, 
+        status: true,
       },
       {
         id: '1232135',
@@ -51,7 +56,7 @@ Page({
         background: '#d6c6de',
         stickDays: 1,
         checked: false,
-        status: true, 
+        status: true,
       },
       {
         id: '1232136',
@@ -71,7 +76,7 @@ Page({
     //   extClass: 'test',
     //   src: '/images/icon/slide_icon/icon_star.svg', // icon的路径
     // }, {
-  
+
     /* 左滑删除按钮 */
     slideButtons: [{
       type: 'warn',
@@ -86,14 +91,58 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.getDatabaseData();
+  },
+
+  getDatabaseData: function() {
+    // 读取数据库内容
+    // 传入：用户id
+    // 传出：该用户的所有打卡项列表
+    var that = this;
+    if (this.data.isNetworkOn) {
+      var arr = new Array();
+      wx.request({
+        //url: "https://172.19.241.77:8080/project/user/getUserInfo",//url中接口前面加一下project项目名
+        url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
+        method: "POST",
+        dataType: 'JSON',
+        header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: {
+          user_id: "3",
+        },
+        success: (res) => {
+          console.log("用户的所有打卡项如下：", res.data)
+          var item = JSON.parse(res.data);
+          var i = 0;
+          for(i=0; i<item.length; i++){
+            var tmp = item[i];
+            //console.log(tmp);
+            var obj = {
+              id: tmp.id,
+              name: tmp.checkin_name,       //打卡名称
+              iconURL: tmp.icon_url,          //指定图标
+              background: tmp.background,      // 背景颜色
+              stickDays: 0,    //坚持日期
+              details: tmp.checkin_description,       //打卡详细内容
+              status: true,
+            };
+            console.log(obj);
+            arr.push(obj);
+          }   
+          
+          // 重新刷新数组
+          this.setData({
+            checkinLists: arr
+          });
+        }
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -101,10 +150,10 @@ Page({
    */
   onShow: function () {
     // 在这里刷新界面内容
-    var list = this.data.checkinLists;
-    this.setData({
-      checkinLists: list
-    });
+    // var list = this.data.checkinLists;
+    // this.setData({
+    //   checkinLists: list
+    // });
   },
 
   /**
@@ -142,14 +191,8 @@ Page({
 
   },
 
-  // 获取当前所有的打卡列表
-  // 从数据库中进行获取
-  getCheckinLists(){
-    //TODO
-  },
-
   //跳转到打卡详情界面
-  goDetails:function(e){
+  goDetails: function (e) {
     console.log('点击具体打卡项')
     console.log(e)
     //实现界面的跳转
@@ -162,7 +205,7 @@ Page({
   },
 
   //添加一个打卡卡片
-  onClickAdd: function(e){
+  onClickAdd: function (e) {
     console.log("add")
     wx.navigateTo({
       url: "../addCheck/addCheck"
@@ -175,7 +218,7 @@ Page({
   },
 
   //长按卡片事件
-  onLongPressCard: function(e){
+  onLongPressCard: function (e) {
     console.log("长按卡片");
   },
 
@@ -189,23 +232,36 @@ Page({
       title: '确定删除',
       content: '是否确定删除该打卡项？',
       success: function (res) {
-        if(res.confirm){
+        if (res.confirm) {
           console.log("删除id:", e.currentTarget.dataset.id);
           // 删除这个id项
-          var del_ID = e.currentTarget.dataset.id;
-          var list = that.data.checkinLists;
-          for (var i = 0; i < list.length; i++) {
-            if (list[i].id === del_ID) {
-              list.splice(i, 1);
+          // var del_ID = e.currentTarget.dataset.id;
+          // var list = that.data.checkinLists;
+          // for (var i = 0; i < list.length; i++) {
+          //   if (list[i].id === del_ID) {
+          //     list.splice(i, 1);
+          //   }
+          // }
+          // // 重新刷新数组
+          // that.setData({
+          //   checkinLists: list
+          // });
+          wx.request({
+            url: "https://172.19.241.77:443/project/checkin/deleteCheckin",
+            method: "POST",
+            dataType: 'JSON',
+            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: {
+              id: e.currentTarget.dataset.id
+            },
+            success: function (res) {
+              console.log(res.data);
             }
-          }
-          // 重新刷新数组
-          that.setData({
-            checkinLists: list
-          });
+          })
+          that.getDatabaseData();
         }
       }
-    })   
+    })
   },
 
 })

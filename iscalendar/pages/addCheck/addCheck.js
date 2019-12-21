@@ -94,10 +94,31 @@ Page({
       status: true,
     };
     console.log("新的打卡项：", obj);
-    list.push(obj);
-    prevPage.setData({
-      checkinLists: list
-    });
+
+    wx.request({
+      url: "https://172.19.241.77:443/project/checkin/createCheckin",
+      method: "POST",
+      dataType: 'JSON',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: {
+        user_id: "3",
+        checkin_name: this.data.check_title,
+        checkin_description: this.data.check_content,
+        icon_url: image_url,
+        background: bg_color,
+      },
+      success: function (res) {
+        console.log(res.data);
+      }
+    })
+
+    // list.push(obj);
+    // prevPage.setData({
+    //   checkinLists: list
+    // });
+
+    // 父层界面进行刷新
+    prevPage.getDatabaseData();
 
     wx.navigateBack({
       delta: 1
