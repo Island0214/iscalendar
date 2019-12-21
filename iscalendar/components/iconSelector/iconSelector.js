@@ -53,7 +53,6 @@ Component({
       })
     },
     clickClock: function (event) {
-      console.log(event.currentTarget.dataset.item.indexOf('.png'))
       this.setData({
         imageUrl: event.currentTarget.dataset.item
       })

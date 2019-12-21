@@ -29,52 +29,7 @@ Page({
       'year': '',
       'week': ''
     },
-    clocks: [{
-        id: '1232131',
-        name: '跑步',
-        iconURL: '1.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        show: true,
-      },
-      {
-        id: '1232132',
-        name: '早起',
-        iconURL: '2.png',
-        background: '#5626e530',
-        stickDays: 2,
-        checked: true,
-        show: true,
-      },
-      {
-        id: '1232133',
-        name: '跑步',
-        iconURL: '3.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        show: true,
-      },
-      {
-        id: '1232134',
-        name: '跑步',
-        iconURL: '4.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        show: true,
-      },
-      {
-        id: '1232135',
-        name: '跑步',
-        iconURL: '5.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        show: true,
-      }
-    ]
+    clocks: []
   },
   //事件处理函数
   bindViewTap: function() {
@@ -86,6 +41,8 @@ Page({
     this.setData({
       today: app.globalData.today
     })
+    this.getTodayCheckins()
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -167,7 +124,7 @@ Page({
   onTapDay(e) {
     var date = app.getFormatDate(e.datail.year + '-' + e.datail.month + '-' + e.datail.day);
     wx.navigateTo({
-      url: '../dateDetail/dateDetail?year=' + e.detail.year +'&week=' + date.week + "&month=" + date.month + "&day=" + date.day 
+      url: '../dateDetail/dateDetail?year=' + e.detail.year + '&week=' + date.week + "&month=" + date.month + "&day=" + date.day
     })
     console.log('onTapDay', e.detail); // => { year: 2019, month: 12, day: 3, ...}
   },
@@ -179,13 +136,54 @@ Page({
   toDateDetail: function(e) {
     var date = app.getFormatDate(e.currentTarget.dataset.content.year + '-' + e.currentTarget.dataset.content.month + '-' + e.currentTarget.dataset.content.day);
     wx.navigateTo({
-      url: "../dateDetail/dateDetail?year="+ date.year +"&week=" + date.week + "&month=" + date.month + "&day=" + date.day
+      url: "../dateDetail/dateDetail?year=" + date.year + "&week=" + date.week + "&month=" + date.month + "&day=" + date.day
     })
   },
 
   toWriteDairy: function() {
     wx.navigateTo({
       url: "../writeDairy/writeDairy"
+    })
+  },
+
+  getTodayCheckins: function() {
+    var arr = new Array();
+    wx.request({
+      url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
+      method: "POST",
+      dataType: 'JSON',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: "3",
+      },
+      success: (res) => {
+        var item = JSON.parse(res.data);
+        var i = 0;
+        for (i = 0; i < item.length; i++) {
+          var tmp = item[i];
+          //console.log(tmp);
+          var obj = {
+            id: tmp.id,
+            name: tmp.checkin_name, //打卡名称
+            iconURL: tmp.icon_url, //指定图标
+            background: tmp.background, // 背景颜色
+            stickDays: tmp.stick_days, //坚持日期
+            checked: tmp.is_checkin == 1,
+            show: true
+          };
+          arr.push(obj);
+        }
+
+        // 重新刷新数组
+        this.setData({
+          clocks: arr
+        });
+      },
+      fail: (res) => {
+        console.log(res);
+      }
     })
   }
 })

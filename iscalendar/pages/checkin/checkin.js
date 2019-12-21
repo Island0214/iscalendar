@@ -12,62 +12,7 @@ Page({
 
     // 所有的打卡列表
     // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
-    checkinLists: [
-      {
-        id: '1232131',
-        name: '跑步',
-        iconURL: '1.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        status: true,
-      },
-      {
-        id: '1232132',
-        name: '早起',
-        iconURL: '2.png',
-        background: '#5626e530',
-        stickDays: 2,
-        checked: true,
-        status: true,
-      },
-      {
-        id: '1232133',
-        name: '跑步',
-        iconURL: '3.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        status: true,
-      },
-      {
-        id: '1232134',
-        name: '跑步',
-        iconURL: '4.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        status: true,
-      },
-      {
-        id: '1232135',
-        name: '跑步',
-        iconURL: '5.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        status: true,
-      },
-      {
-        id: '1232136',
-        name: '跑步(test_false)',
-        iconURL: '5.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: false,
-        status: false,
-      }
-    ],
+    checkinLists: [],
     // slideButtons: [{
     //   text: '普通',
     //   src: '/images/icon/slide_icon/icon_love.svg', // icon的路径

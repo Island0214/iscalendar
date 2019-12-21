@@ -31,7 +31,7 @@
     <view class="kind-list__item">
       <view class="weui-flex kind-list__item-hd">
         <view class="weui-flex__item">手机号</view>
-        <input style="text-align: right;" class="weui-input" maxlength="11" type="number" placeholder="请输入" value="{{phone}}" />
+        <input style="text-align: right;" class="weui-input" maxlength="11" type="number" placeholder="请输入" value="{{phone}}" bindblur="bindblur"/>
       </view>
     </view>
   </view>

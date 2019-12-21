@@ -35,5 +35,10 @@
         <clock clockConfig="{{item}}" class="weui-grid"></clock>
       </block>
     </view>
+    <view class="kind-list__item" wx:if="{{clocks.length == 0}}">
+      <view class="weui-flex kind-list__item-hd notification-class">
+        <h4>还没有设置打卡事项...</h4>
+      </view>
+    </view>
   </view>
 </view>

@@ -1,7 +1,7 @@
 <view class="page__bd page__bd_spacing body-wrapper" style="background-color: transparent;">
   <view class="kind-list__item" wx:if="{{checkinLists.length == 0}}">
-    <view class="weui-flex kind-list__item-hd">
-      <h4>还没有设置打卡事项...</h4>
+    <view class="weui-flex kind-list__item-hd notification-class">
+      <h4>还没有添加打卡事项...</h4>
     </view>
   </view>
 

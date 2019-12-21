@@ -9,53 +9,7 @@ Page({
     // 所有的打卡列表
     // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
     
-    anniversaryLists: [
-      {
-        id: '1232131',
-        name: "纪念日1",       //纪念日名称
-        iconURL: "1.png",          //指定图标
-        passDays: "5",    //已过时间
-        createDate: "2019.01.01",       //纪念日创建日期
-        background: "#eeeeee",
-         status: true
-      },
-      {
-        id: '1232132',
-        name: "纪念日2",       //纪念日名称
-        iconURL: "2.png",          //指定图标
-        passDays: "2",    //已过时间
-        createDate: "2018.01.02",       //纪念日创建日期
-        background: "#eeeeee",
-        status: true,
-      },
-      {
-        id: '1232133',
-        name: "纪念日3",       //纪念日名称
-        iconURL: "3.png",          //指定图标
-        passDays: "4",    //已过时间
-        createDate: "2018.10.10",       //纪念日创建日期
-        background: "#eeeeee",
-        status: true,
-      },
-      {
-        id: '1232134',
-        name: "纪念日4",       //纪念日名称
-        iconURL: "4.png",          //指定图标
-        passDays: "1",    //已过时间
-        createDate: "1999.09.11",       //纪念日创建日期
-        background: "#eeeeee",
-        status: true,
-      },
-      {
-        id: '1232135',
-        name: "纪念日5",       //纪念日名称
-        iconURL: "5.png",          //指定图标
-        passDays: "0",    //已过时间
-        createDate: "2019.11.11",       //纪念日创建日期
-        background: "#eeeeee",
-        status: true,
-      },
-    ],
+    anniversaryLists: [],
 
     /* 左滑删除按钮 */
     slideButtons: [{

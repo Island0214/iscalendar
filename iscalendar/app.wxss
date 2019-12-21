@@ -276,3 +276,12 @@ button[type='primary'] {
 .weui-btn-area_inline .weui-btn:last-child {
   margin-right: 0;
 }
+
+.notification-class {
+  text-align: center;
+}
+
+.notification-class h4 {
+  width: 100%;
+  color: #999999;
+}

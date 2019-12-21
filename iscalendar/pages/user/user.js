@@ -36,11 +36,73 @@ Page({
     this.setData({
       date: e.detail.value
     })
+    wx.request({
+      url: "https://172.19.241.77:443/project/user/modifyBirthday",
+      method: "POST",
+      dataType: 'JSON',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: '3',
+        birthday: e.detail.value,
+      },
+      success: (res) => {
+        wx.showToast({
+          icon: 'success',
+          title: '修改成功！',
+          duration: 2000
+        })
+      },
+      fail: (res) => {
+        console.log(res);
+      }
+    })
   },
   bindblur: function (e) {
-    this.setData({
-      phone: e.detail.value
-    })
+    let tmp = e.detail.value
+    let reg = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/;
+    if (reg.test(tmp)) {
+      this.setData({
+        phone: e.detail.value
+      })
+      wx.showToast({
+        icon: 'none',
+        title: '请输入正确的手机号',
+        duration: 2000
+      })
+      wx.request({
+        url: "https://172.19.241.77:443/project/user/modifyPhone",
+        method: "POST",
+        dataType: 'JSON',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: '3',
+          phone: e.detail.value,
+        },
+        success: (res) => {
+          wx.showToast({
+            icon: 'success',
+            title: '修改成功！',
+            duration: 2000
+          })
+        },
+        fail: (res) => {
+          console.log(res);
+        }
+      })
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '请输入正确的手机号',
+        duration: 2000
+      })
+      this.setData({
+        phone: ''
+      })
+    }
   },
   onLoad: function() {
     let date = new Date();
@@ -52,6 +114,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
+      this.getUserInfo()
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -75,11 +138,33 @@ Page({
     }
   },
   getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+    wx.request({
+      url: "https://172.19.241.77:443/project/user/getUserInfo",
+      method: "POST",
+      dataType: 'JSON',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: '3',
+      },
+      success: (res) => {
+        var item = JSON.parse(res.data)
+        if (item.phone) {
+          this.setData({
+            phone: item.phone
+          })
+        } 
+        if (item.birthday) {
+          this.setData({
+            phone: item.birthday
+          })
+        } 
+        console.log(res)
+      },
+      fail: (res) => {
+        console.log(res);
+      }
     })
   }
 })

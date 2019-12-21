@@ -16,7 +16,8 @@ Component({
   data: {
     name: '',
     backgroundColor: '#FFFFFF',
-    checked: false
+    checked: false,
+    stick_days: 0
   },
 
   /**
@@ -24,11 +25,54 @@ Component({
    */
   methods: {
     clickClock: function() {
-      this.setData({
-        checked: !this.data.checked
-      })
-
-      this.setBackground();
+      if (!this.data.checked) {
+        wx.request({
+          url: "https://172.19.241.77:443/project/checkin/checkin",
+          method: "POST",
+          dataType: 'JSON',
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            checkin_id: this.properties.clockConfig.id,
+          },
+          success: (res) => {
+            var item = JSON.parse(res.data);
+            console.log(item)
+            this.setData({
+              checked: true,
+              stick_days: item.stick_days
+            })
+            this.setBackground();
+          },
+          fail: (res) => {
+            console.log(res);
+          }
+        })
+      } else {
+        wx.request({
+          url: "https://172.19.241.77:443/project/checkin/cancelCheckin",
+          method: "POST",
+          dataType: 'JSON',
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            checkin_id: this.properties.clockConfig.id,
+          },
+          success: (res) => {
+            var item = JSON.parse(res.data);
+            this.setData({
+              checked: false,
+              stick_days: item.stick_days
+            })
+            this.setBackground();
+          },
+          fail: (res) => {
+            console.log(res);
+          }
+        })
+      }
     },
     setBackground: function() {
       if (this.data.checked) {
@@ -45,7 +89,8 @@ Component({
 
   attached: function() {
     this.setData({
-      checked: this.properties.clockConfig.checked
+      checked: this.properties.clockConfig.checked,
+      stick_days: this.properties.clockConfig.stickDays,
     })
 
     this.setBackground();
