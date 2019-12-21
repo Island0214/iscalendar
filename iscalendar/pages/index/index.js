@@ -167,7 +167,7 @@ Page({
   onTapDay(e) {
     var date = app.getFormatDate(e.datail.year + '-' + e.datail.month + '-' + e.datail.day);
     wx.navigateTo({
-      url: '../dateDetail/dateDetail?week=' + date.week + "&month=" + date.month + "&day=" + date.day 
+      url: '../dateDetail/dateDetail?year=' + e.detail.year +'&week=' + date.week + "&month=" + date.month + "&day=" + date.day 
     })
     console.log('onTapDay', e.detail); // => { year: 2019, month: 12, day: 3, ...}
   },
@@ -177,10 +177,9 @@ Page({
   afterCalendarRender(e) {},
 
   toDateDetail: function(e) {
+    var date = app.getFormatDate(e.currentTarget.dataset.content.year + '-' + e.currentTarget.dataset.content.month + '-' + e.currentTarget.dataset.content.day);
     wx.navigateTo({
-      url: "../dateDetail/dateDetail?week=" + e.currentTarget.dataset.content.week + "&month=" + e.currentTarget.dataset.content.month + "&day=" + e.currentTarget.dataset.content.day
-      //此处需传入日期
-      // url:"../dateDetail/dateDetail" 
+      url: "../dateDetail/dateDetail?year="+ date.year +"&week=" + date.week + "&month=" + date.month + "&day=" + date.day
     })
   },
 
