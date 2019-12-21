@@ -102,12 +102,25 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
     })
   },
   onLoad: function(option) {
-    var that = this
+    var that = this;
     if (app.globalData.userInfo) {
-      
       var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-      var month = arr_month.indexOf(option.month)+1
-      var dateObject = app.getFormatDate(option.year + '-' + month + '-' + option.day);
+      var month = arr_month.indexOf(option.month) + 1;
+      if(arr_month.indexOf(option.month) =="-1"){
+        month = option.month
+      }
+      console.log(month+"->"+option.month);
+      var dateObject = app.getFormatDate(option.year + '-' + option.month + '-' + option.day);
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true,
+        year: option.year,
+        month: month,
+        day: option.day,
+        date: dateObject,
+        // nodes:wx.getStorageSync("content_html"),
+        // content:wx.getStorageSync("content_html")
+      })
       //获取当日日记内容
       wx.request({
         url: "https://172.19.241.77:443/project/diary/getDiaryByUserIDandDate",
@@ -231,7 +244,7 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
               createDate: tmp.anniversary, //纪念日创建日期
               background: tmp.background,
               description: tmp.anniversary_description,
-
+              anniversary_type:tmp.anniversary_type  //纪念方式
             };
             console.log(obj);
             anniversaryArr.push(obj);
@@ -245,16 +258,7 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
         fail: function(res) {},
         complete: function(res) {},
       })
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true,
-        year: option.year,
-        month: month,
-        day: option.day,
-        date: dateObject,
-        // nodes:wx.getStorageSync("content_html"),
-        // content:wx.getStorageSync("content_html")
-      })
+      
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
