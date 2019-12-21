@@ -88,17 +88,33 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     })
     wx.setStorageSync("content",e.detail)
   },
-  // 显示结果
+  // 保存并上传日记
   clickSaveText(e) {
     this.setData({
       nodes: this.data.content.html,
       content_html: this.data.content.html
     })
+    //wx.setStorageSync("content_html",this.data.content.html)
+    wx.navigateBack()
+    wx.request({
+      url: "https://172.19.241.77:443/project/diary/createDiary",
+      header: {'Content-Type':'application/x-www-form-urlencoded'},
+      method: 'POST',
+      dataType: 'JSON',
+      data: {
+        user_id:"1",
+        picture:"",
+        content: this.data.content.html
+      },
+      
+      //responseType: 'text',
+      success: function(res) {
+        console.log(res.data)
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   },
-  // //保存并上传结果
-  // clickSaveText(e) {
-    
-  // },
   blur() {
     this.editorCtx.blur()
   },

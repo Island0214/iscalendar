@@ -4,16 +4,30 @@ const app = getApp()
 
 Page({ //页面的生命周期钩子、事件处理函数、页面的默认数据
   data: {
-    content: "富文本编辑器，可以对图片、文字进行编辑。编辑器导出内容支持带标签的 html和纯文本的 text，编辑器内部采用 delta 格式进行存储。通过setContents接口设置内容时，解析插入的 html 可能会由于一些非法标签导致解析错误，建议开发者在小程序内使用时通过 delta 进行插入。富文本组件内部引入了一些基本的样式使得内容可以正确的展示，开发时可以进行覆盖。需要注意的是，在其它组件或环境中使用富文本组件导出的html时，需要额外引入 这段样式，并维护<ql-container><ql-editor></ql-editor></ql-container>的结构。图片控件仅初始化时设置有效。",
-    day: '2019',
+    content: "当日无日记......",
+    picture:"",
+    year: '2019',
     week: "sun1",
     month: "Dec1",
     day: "151",
+    anniversaryCount:"0",
+    checkinCount:"0",
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     placeholder: '开始输入..',
     date: {},
+    nodes: [{
+      name: 'div',
+      attrs: {
+        class: 'div_class',
+        style: 'line-height: 60px; color: black;'
+      },
+      children: [{
+        type: 'text',
+        text: '当日无日记......'
+      }]
+    }],
     checkinList: [{
         id: '1232131',
         name: '跑步',
@@ -88,15 +102,98 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
     })
   },
   onLoad: function(option) {
+    var that = this
     if (app.globalData.userInfo) {
-      var dateObject = app.getFormatDate(option.year + '-' + option.month + '-' + option.day);
+      
+      var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+      var month = arr_month.indexOf(option.month)+1
+      var dateObject = app.getFormatDate(option.year + '-' + month + '-' + option.day);
+      //获取当日日记内容
+      wx.request({
+        url: "https://172.19.241.77:443/project/diary/getDiaryByUserIDandDate",
+        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          user_id:"1",
+          this_date:option.year + '-' + month + '-' + option.day,
+        },
+        
+        //responseType: 'text',
+        success: function(res) {
+          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log(res.data)
+          var item = JSON.parse(res.data);
+          if(item.diarystate == "1"){
+            that.setData({
+              content: item.content,
+              nodes:item.content,
+              picture: item.picture
+            })
+            
+          }
+          //console.log(item.diarystate)
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+      //获取当日纪念数和打卡数
+      wx.request({
+        url: "https://172.19.241.77:443/project/user/getOverviewOfToday",
+        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          user_id:"1",
+          this_date:option.year + '-' + month + '-' + option.day,
+        },
+        
+        //responseType: 'text',
+        success: function(res) {
+          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log(res.data)
+          var item = JSON.parse(res.data);
+          that.setData({
+            anniversaryCount: item.anniversarycount,
+            checkinCount: item.checkincount
+          })
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+      //获取当日纪念列表和打卡列表
+      // wx.request({
+      //   url: "https://172.19.241.77:443/project/user/getOverviewOfToday",
+      //   header: {'Content-Type':'application/x-www-form-urlencoded'},
+      //   method: 'POST',
+      //   dataType: 'JSON',
+      //   data: {
+      //     user_id:"1",
+      //     this_date:option.year + '-' + month + '-' + option.day,
+      //   },
+      //   //responseType: 'text',
+      //   success: function(res) {
+      //     console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+      //     console.log(res.data)
+      //     if(res.data.diarystate == "1"){
+      //       this.setData({
+      //         anniversaryCount:this.data.anniversarycount,
+      //         checkinCount:this.data.checkincount
+      //       })
+      //     }
+      //   },
+      //   fail: function(res) {},
+      //   complete: function(res) {},
+      // })
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
         year: option.year,
-        month: option.month,
+        month: month,
         day: option.day,
-        date: dateObject
+        date: dateObject,
+        // nodes:wx.getStorageSync("content_html"),
+        // content:wx.getStorageSync("content_html")
       })
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回

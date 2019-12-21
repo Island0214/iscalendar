@@ -25,9 +25,9 @@
           <text class='item-right-name'>当日日期</text>
           <text class='item-right-text'>{{year}}-{{month}}-{{day}}</text>
           <text class='item-right-name'>当日纪念数</text>
-          <text class='item-right-text'>0</text>
+          <text class='item-right-text'>{{anniversaryCount}}</text>
           <text class='item-right-name'>当日打卡数</text>
-          <text class='item-right-text'>0</text>
+          <text class='item-right-text'>{{checkinCount}}</text>
         </view>
       </view>
     </view>
@@ -71,22 +71,10 @@
   <view class="page__bd page__bd_spacing">
     <h3>当日日记</h3>
     <view class="text-diary">
-      <h6 wx:if="{{content.length == 0 && files.length == 0}}">当日未编写日记...</h6>
+      <!-- <h6 wx:if="{{content.length == 0 && files.length == 0}}">当日未编写日记...</h6> -->
+      <h6 wx:if="{{content=='<p><br></p>'}}">当日未编写日记...</h6>
       <view class="weui-flex">
-        <view class="weui-uploader">
-          <view class="weui-uploader__bd">
-            <view class="weui-uploader__files" id="uploaderFiles">
-              <block wx:for="{{files}}" wx:key="*this">
-                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                </view>
-              </block>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="weui-flex">
-        <rich-text nodes="{{content}}"></rich-text>
+        <rich-text nodes="{{nodes}}"></rich-text>
       </view>
     </view>
   </view>
