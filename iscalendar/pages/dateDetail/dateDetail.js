@@ -164,7 +164,7 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       //获取当日打卡列表
       var checkinArr = new Array();
       wx.request({
-        url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
+        url: "https://172.19.241.77:443/project/checkin/getCheckinsByUser",
         header: {'Content-Type':'application/x-www-form-urlencoded'},
         method: 'POST',
         dataType: 'JSON',
