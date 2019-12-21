@@ -1,4 +1,5 @@
 // pages/checkin/checkin_content/checkin_content.js
+// TODO: 日历上显示所有已打卡的日期
 
 const app = getApp()
 Page({
@@ -36,14 +37,14 @@ Page({
     },
 
     checkinItem:{
-      'plannedDays': 'NaN1',      //计划天数
-      'checkinDays': 'NaN2',      //打卡天数
-      'missedDays': 'NaN3',       //错过天数
-      'totalCheckedDays': 'NaN4', //总计打卡天数
-      'curConsecutiveDays': 'NaN5', //当前连续时长
-      'maxConsecutiveDays': 'NaN6', //最大连续时长
-      'createDay': 'NaN7',         //建立时间
-      'checkinProgess': "0"           //当前进度
+      plannedDays: 'NaN1',      //计划天数
+      checkinDays: 'NaN2',      //打卡天数
+      missedDays: 'NaN3',       //错过天数
+      totalCheckedDays: 'NaN4', //总计打卡天数
+      curConsecutiveDays: 'NaN5', //当前连续时长
+      maxConsecutiveDays: 'NaN6', //最大连续时长
+      createDay: 'NaN7',         //建立时间
+      checkinProgess: "0"           //当前进度
     },
 
     icon_url: {
@@ -118,6 +119,36 @@ Page({
       cur_id: options.id,
       today: app.globalData.today
     })
+
+    // 获取此打卡项数据
+    var that = this;
+    wx.request({
+      url: "https://172.19.241.77:443/project/checkin/getCheckinByID",
+      method: "POST",
+      dataType: 'JSON',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: {
+        id: this.data.cur_id
+      },
+      success: function (res) {
+        console.log(res.data);
+        var item = JSON.parse(res.data);
+        var obj = {
+          plannedDays: item.planday,      //计划天数
+          checkinDays: item.planday,      //打卡天数
+          missedDays: item.missday,       //错过天数
+          totalCheckedDays: item.totalcheckinday, //总计打卡天数
+          curConsecutiveDays: item.stick_days, //当前连续时长
+          maxConsecutiveDays: item.stick_days, //最大连续时长
+          createDay: item.created_at,         //建立时间
+          checkinProgess: item.totalcheckinday / item.historyday,           //当前进度
+        }
+        that.setData({
+          checkinItem: obj,
+        })
+      }
+    })
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -256,6 +287,41 @@ Page({
   //按下删除图标
   onClickDelete: function(e) {
     console.log("按下了删除图标");
+    var that = this;
+
+    var pages = getCurrentPages();            //得到界面栈
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+
+    wx.showModal({
+      title: '确定删除',
+      content: '是否确定删除该打卡项？',
+      success: function (res) {
+        if (res.confirm) {
+          // 删除此打卡项
+          wx.request({
+            url: "https://172.19.241.77:443/project/checkin/deleteCheckin",
+            method: "POST",
+            dataType: 'JSON',
+            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: {
+              id: that.data.cur_id
+            },
+            success: function (res) {
+              console.log(res.data);
+              // 父层界面进行刷新
+              prevPage.getDatabaseData();
+
+              wx.navigateBack({
+                delta: 1
+              });
+            }
+          })
+        }
+      }
+    })
+
+    
   },
 
   //按下编辑图标

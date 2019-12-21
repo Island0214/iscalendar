@@ -41,33 +41,8 @@
   </view>
 </view>
 
-<!--添加打卡项[图片]-->
+<!--添加打卡项-->
 <view class="page__ft">
-
   <!-- 添加打卡项内容 -->
-  <!-- <image src="{{Image_addItem_URL}}" style="width: 35px; height: 35px;" bindtap="onClickAdd"></image> -->
   <view class="full-btn" bindtap="onClickAdd">+ 添加一个打卡事项</view>
-
-  <view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='maskWindowBgClick' catchtouchmove='move'>
-    <view class='maskWindowContent' catchtap='clickTap'>
-      <text class="maskWindowTitleText">新建打卡</text>
-      <view class='maskWindowInputView maskWindowText'>
-        <text>打卡项目</text>
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入打卡项目' bindinput='maskWindowInput_title'></input>
-      </view>
-      <view class='maskWindowInputView maskWindowText'>
-        <text>打卡详情</text>
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入打卡项目详情' bindinput='maskWindowInput_content'></input>
-      </view>
-      <view class='maskWindowBtnView'>
-        <view class='maskWindowBtn' catchtap='maskWindowOk'>确定</view>
-        <view class='maskWindowBtn' catchtap='maskWindowCancel'>取消</view>
-      </view>
-    </view>
-  </view>
-
-
-
-
-
 </view>
