@@ -161,30 +161,90 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
         fail: function(res) {},
         complete: function(res) {},
       })
-      //获取当日纪念列表和打卡列表
-      // wx.request({
-      //   url: "https://172.19.241.77:443/project/user/getOverviewOfToday",
-      //   header: {'Content-Type':'application/x-www-form-urlencoded'},
-      //   method: 'POST',
-      //   dataType: 'JSON',
-      //   data: {
-      //     user_id:"1",
-      //     this_date:option.year + '-' + month + '-' + option.day,
-      //   },
-      //   //responseType: 'text',
-      //   success: function(res) {
-      //     console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
-      //     console.log(res.data)
-      //     if(res.data.diarystate == "1"){
-      //       this.setData({
-      //         anniversaryCount:this.data.anniversarycount,
-      //         checkinCount:this.data.checkincount
-      //       })
-      //     }
-      //   },
-      //   fail: function(res) {},
-      //   complete: function(res) {},
-      // })
+      //获取当日打卡列表
+      var checkinArr = new Array();
+      wx.request({
+        url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
+        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          user_id:"1",
+          this_date: option.year + '-' + month + '-' + option.day
+        },
+        //responseType: 'text',
+        success: function(res) {
+          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log(res.data)
+          var item = JSON.parse(res.data);
+          var i = 0;
+          for(i=0; i<item.length; i++){
+            var tmp = item[i];
+            //console.log(tmp);
+            var obj = {
+              id: tmp.id,
+              name: tmp.checkin_name,       //打卡名称
+              iconURL: tmp.icon_url,          //指定图标
+              background: tmp.background,      // 背景颜色
+              stickDays: 0,    //坚持日期
+              details: tmp.checkin_description,       //打卡详细内容
+              status: true,
+            };
+            console.log(obj);
+            checkinArr.push(obj);
+          }   
+
+          // 重新刷新数组
+          that.setData({
+            checkinList: checkinArr
+          });
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+
+      //获取当日纪念日列表
+      var anniversaryArr = new Array();
+      wx.request({
+        url: "https://172.19.241.77:443/project/anniversary/getAnniversariesByUser",
+        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        method: 'POST',
+        dataType: 'JSON',
+        data: {
+          user_id: "1",
+          this_date: option.year + '-' + month + '-' + option.day
+        },
+        //responseType: 'text',
+        success: function(res) {
+          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log(res.data)
+          var item = JSON.parse(res.data);
+          var i = 0;
+          for(i=0; i<item.length; i++){
+            var tmp = item[i];
+            //console.log(tmp);
+            var obj = {
+              id: tmp.id,
+              name: tmp.anniversary_name, //纪念日名称
+              iconURL: tmp.icon_url, //指定图标
+              passDays: tmp.distday, //已过时间
+              createDate: tmp.anniversary, //纪念日创建日期
+              background: tmp.background,
+              description: tmp.anniversary_description,
+
+            };
+            console.log(obj);
+            anniversaryArr.push(obj);
+          }   
+
+          // 重新刷新数组
+          that.setData({
+            anniversaryList: anniversaryArr
+          });
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
