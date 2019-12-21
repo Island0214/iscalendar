@@ -95,12 +95,14 @@ Page({
   },
 
   getDatabaseData: function() {
+    console.log("刷新数据库")
     // 读取数据库内容
     // 传入：用户id
     // 传出：该用户的所有打卡项列表
     var that = this;
     if (this.data.isNetworkOn) {
       var arr = new Array();
+      console.log("request data")
       wx.request({
         //url: "https://172.19.241.77:8080/project/user/getUserInfo",//url中接口前面加一下project项目名
         url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
@@ -134,8 +136,12 @@ Page({
           this.setData({
             checkinLists: arr
           });
+        },
+        fail: (res) => {
+          console.log(res);
         }
       })
+      console.log("request end")
     }
   },
 
