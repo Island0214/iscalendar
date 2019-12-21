@@ -8,7 +8,7 @@ Page({
    */
   data: {
     // 是否开启网络功能（Debug）
-    isNetworkOn: true ,
+    isNetworkOn: true,
 
     // 所有的打卡列表
     // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
