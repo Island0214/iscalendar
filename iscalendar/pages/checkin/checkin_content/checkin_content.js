@@ -288,6 +288,8 @@ Page({
     // 请求获取数据库此打卡项的所有打卡日期
     var checkinList = new Array();
     var that = this;
+    var time_str = app.globalData.today.year + "-" + app.globalData.today.month;
+    console.log(time_str);
     wx.request({
       url: "https://172.19.241.77:443/project/checkin/getMonthCheckin",
       method: "POST",
@@ -296,7 +298,7 @@ Page({
       data: {
         //id: that.data.cur_id
         user_id: "3",
-        this_month: "2019-12"
+        this_month: "2019-12"   // 需要改一下方法
       },
       success: function (res) {
         var tmpList = JSON.parse(res.data);

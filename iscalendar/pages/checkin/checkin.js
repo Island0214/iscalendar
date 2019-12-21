@@ -180,7 +180,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    // 下拉刷新
+    console.log("刷新数据库");
+    if (!this.loading) {
+      this.getDatabaseData();
+        // 处理完成后，终止下拉刷新
+      wx.stopPullDownRefresh()
+    
+    }
   },
 
   /**
@@ -240,18 +247,6 @@ Page({
       success: function (res) {
         if (res.confirm) {
           console.log("删除id:", e.currentTarget.dataset.id);
-          // 删除这个id项
-          // var del_ID = e.currentTarget.dataset.id;
-          // var list = that.data.checkinLists;
-          // for (var i = 0; i < list.length; i++) {
-          //   if (list[i].id === del_ID) {
-          //     list.splice(i, 1);
-          //   }
-          // }
-          // // 重新刷新数组
-          // that.setData({
-          //   checkinLists: list
-          // });
           wx.request({
             url: "https://172.19.241.77:443/project/checkin/deleteCheckin",
             method: "POST",
