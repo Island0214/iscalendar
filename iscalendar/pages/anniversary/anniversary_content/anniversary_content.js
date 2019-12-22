@@ -64,13 +64,15 @@ Page({
         }
         that.setData({
           AnniversaryDetails: obj,
+          date: app.getFormatDate(item.anniversary)
         })
       },
     })
-    console.log(this.data.AnniversaryDetails.date);
-    this.setData({
-      date: app.getFormatDate(this.data.AnniversaryDetails.date)
-    })
+    console.log(this.data.AnniversaryDetails.description);
+    // this.setData({
+    //   date: app.getFormatDate(this.data.date)
+    // })
+    console.log("date++" + this.data.date);
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
