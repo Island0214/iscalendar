@@ -140,22 +140,23 @@ Page({
 
         // 计算打卡进度百分比
         var pc = 100;
-        if (item.historyday == 0){
+        if (parseInt(item.historyday)+1 == 0){
           pc = 0;
         }else{
           if (item.totalcheckinday == null || item.historyday == null){
             pc = 100;
           }else{
             var a = item.totalcheckinday;
-            var b = item.historyday;
+            var b = parseInt(item.historyday) + 1;
             pc = a/b * 100;
+            console.log("百分比：",pc)
           }
         }
 
-        // 当前获取不到historyDay的权衡之计
-        var pd = (item.historyday == null) ? item.totalcheckinday : item.historyday;
-        // 当前获取不到missDay的权衡之计
-        var md = (item.missday == null) ? 0 : item.missday;
+        // historyday 返回的值少1
+        var pd = (item.historyday == null) ? item.totalcheckinday : parseInt(item.historyday)+1;
+
+        var md = (item.missday == null) ? 0 : (item.missday < 0 ? 0 : item.missday);
 
         var obj = {
           plannedDays: pd, //计划天数
