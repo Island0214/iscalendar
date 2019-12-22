@@ -102,7 +102,7 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
       method: 'POST',
       dataType: 'JSON',
       data: {
-        user_id:"1",
+        user_id:"3",
         picture:"",
         content: this.data.content.html
       },
