@@ -8,7 +8,10 @@ Page({
     today: '',
     date: '',
     types: ['非纪念日', '每月纪念', '每年纪念'],
-    selectedType: '非纪念日'
+    selectedType: '非纪念日',
+    anniversary_title: "",
+    anniversary_description: "",
+    anniversary_type: "",
   },
 
   /**
@@ -77,5 +80,84 @@ Page({
     this.setData({
       selectedType: event.currentTarget.dataset.item
     })
-  }
+  },
+
+
+  /**
+   * 点击保存按钮返回上一个界面
+   */
+  onClickSave: function (e) {
+    console.log("新建一个纪念日");
+    //console.log(this.selectComponent("#iconSelector").data.backgroundColor);
+
+    var image_url = "../../images/clock/" + this.selectComponent("#iconSelector").data.imageUrl;
+    var bg_color = this.selectComponent("#iconSelector").data.backgroundColor;
+    console.log("pages" + pages);
+    var pages = getCurrentPages();            //得到界面栈
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+
+    var list = prevPage.data.anniversaryLists;
+    var newID = parseInt(list[list.length - 1].id);
+    newID = newID + 1;
+    var newID_s = "" + newID;
+    var obj = {
+      id: newID_s,
+      name: this.data.anniversary_title,       //纪念日名称
+      iconURL: image_url,          //指定图标
+      background: "#" + bg_color,      // 背景颜色
+      description: this.data.anniversary_description,    //描述
+      type: this.data.selectedType,    //类型
+      date: this.data.date,    //日期
+      status: true,
+    };
+    console.log("新的纪念日：", obj);
+
+    wx.request({
+      url: "https://172.19.241.77:443/project/anniversary/createAnniversary",
+      method: "POST",
+      dataType: 'JSON',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: {
+        user_id: "3",
+        anniversary_name: this.data.anniversary_title,
+        anniversary_description: this.data.anniversary_description,
+        anniversary_type: this.data.selectedType,
+        anniversary: this.data.date,
+        icon_url: image_url,
+        background: bg_color,
+      },
+      success: function (res) {
+        console.log(res.data);
+      }
+    })
+
+    // list.push(obj);
+    // prevPage.setData({
+    //   checkinLists: list
+    // });
+
+    // 父层界面进行刷新
+    prevPage.getDatabaseData();
+
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+
+  //输入框[标题]输入绑定事件
+  onInput_title: function (e) {
+    var value = e.detail.value;
+    this.setData({
+      anniversary_title: value
+    })
+  },
+
+  //输入框[详情]输入绑定事件
+  onInput_description: function (e) {
+    var value = e.detail.value;
+    this.setData({
+      anniversary_description: value
+    })
+  },
 })

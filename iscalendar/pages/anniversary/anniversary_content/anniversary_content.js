@@ -60,7 +60,7 @@ Page({
           nextAnniversary: item.restday, //总计打卡天数
           type: item.anniversary_type, //当前连续时长
           description: item.anniversary_description, //最大连续时长
-         
+          nextAnniversary:item.to_next_anniversary,
         }
         that.setData({
           AnniversaryDetails: obj,

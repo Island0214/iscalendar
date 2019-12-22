@@ -1,4 +1,5 @@
-// pages/checkin/checkin.js
+// pages/anniversary/anniversary.js
+const app = getApp()
 Page({
 
   /**
@@ -56,7 +57,7 @@ Page({
         dataType: 'JSON',
         header: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
-          user_id: "1",
+          user_id: "3",
         },
         success: (res) => {
           console.log("用户的所有纪念日如下：", res.data)
@@ -158,7 +159,7 @@ Page({
   //添加一个新的纪念日
   addAnniversary: function (e) {
     wx.navigateTo({
-      url: '/pages/addAnniversary/addAnniversary'
+      url: "../addAnniversary/addAnniversary"
     })
   },
 

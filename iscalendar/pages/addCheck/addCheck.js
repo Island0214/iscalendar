@@ -75,7 +75,7 @@ Page({
 
     var image_url = "../../images/clock/" + this.selectComponent("#iconSelector").data.imageUrl;
     var bg_color = this.selectComponent("#iconSelector").data.backgroundColor;
-
+    console.log("pages"+pages);
     var pages = getCurrentPages();            //得到界面栈
     var currPage = pages[pages.length - 1];   //当前页面
     var prevPage = pages[pages.length - 2];  //上一个页面
