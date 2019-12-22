@@ -36,7 +36,7 @@
         </view>
         <view class="weui-flex kind-list__item-hd" wx:if="{{AnniversaryDetails.type != '非纪念日'}}">
           <view class="page-text">
-            <text class="NextAnnTime">{{AnniversaryDetails.nextAnniversary}}</text>
+            <text class="NextAnnTime">{{AnniversaryDetails.nextAnniversary}} 天</text>
           </view>
         </view>
       </view>

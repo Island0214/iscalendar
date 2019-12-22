@@ -66,11 +66,6 @@ Page({
       this.setData({
         phone: e.detail.value
       })
-      wx.showToast({
-        icon: 'none',
-        title: '请输入正确的手机号',
-        duration: 2000
-      })
       wx.request({
         url: "https://172.19.241.77:443/project/user/modifyPhone",
         method: "POST",
@@ -157,7 +152,7 @@ Page({
         } 
         if (item.birthday) {
           this.setData({
-            phone: item.birthday
+            date: item.birthday
           })
         } 
         console.log(res)

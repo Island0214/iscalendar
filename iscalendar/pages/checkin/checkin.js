@@ -57,7 +57,7 @@ Page({
         dataType: 'JSON',
         header: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
-          user_id: that.data.uid,
+          user_id: app.globalData.openid,
         },
         success: (res) => {
           console.log("用户的所有打卡项如下：", res.data)

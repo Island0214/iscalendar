@@ -20,7 +20,7 @@
           <h3>打卡进度：{{today.month}}</h3>
         </view>
         <view class="weui-flex kind-list__item-hd">
-          <progress percent="{{checkinItem.checkinProgess}}" font-size="12px" show-info />
+          <progress percent="{{checkinItem.checkinProgess}}" font-size="12px" color="#5626e5" show-info />
         </view>
         <view class="weui-flex kind-list__item-hd">
           <view class="page-text">

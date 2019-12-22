@@ -36,7 +36,9 @@
   <view class="page__bd page__bd_spacing">
     <h3>当日打卡</h3>
     <view class="text-diary">
-      <h6 wx:if="{{checkinList.length == 0}}">当日没有打卡记录...</h6>
+      <view class="notification-class" wx:if="{{checkinList.length == 0}}">
+        <h4>当日没有打卡记录...</h4>
+      </view>
       <view class="weui-grids" wx:else>
         <block wx:for="{{checkinList}}" wx:key="id">
           <view class="clock-wrapper weui-grid">
@@ -53,7 +55,9 @@
   <view class="page__bd page__bd_spacing">
     <h3>当日纪念</h3>
     <view class="text-diary">
-      <h6 wx:if="{{anniversaryList.length == 0}}">当日没有纪念事件...</h6>
+      <view class="notification-class" wx:if="{{anniversaryList.length == 0}}">
+        <h4>当日没有纪念事件...</h4>
+      </view>
       <view class="weui-grids" wx:else>
         <block wx:for="{{anniversaryList}}" wx:key="id">
           <view class="clock-wrapper weui-grid">
@@ -72,7 +76,9 @@
     <h3>当日日记</h3>
     <view class="text-diary">
       <!-- <h6 wx:if="{{content.length == 0 && files.length == 0}}">当日未编写日记...</h6> -->
-      <h6 wx:if="{{content=='<p><br></p>'}}">当日未编写日记...</h6>
+      <view class="notification-class" wx:if="{{content==''}}">
+        <h4>当日未编写日记...</h4>
+      </view>
       <view class="weui-flex">
         <rich-text nodes="{{nodes}}"></rich-text>
       </view>

@@ -1,4 +1,6 @@
 // pages/addAnniversary/addAnniversary.js
+const app = getApp()
+
 Page({
 
   /**
@@ -98,11 +100,11 @@ Page({
     var prevPage = pages[pages.length - 2];  //上一个页面
 
     var list = prevPage.data.anniversaryLists;
-    var newID = parseInt(list[list.length - 1].id);
-    newID = newID + 1;
-    var newID_s = "" + newID;
+    // var newID = parseInt(list[list.length - 1].id);
+    // newID = newID + 1;
+    // var newID_s = "" + newID;
     var obj = {
-      id: newID_s,
+      // id: newID_s,
       name: this.data.anniversary_title,       //纪念日名称
       iconURL: image_url,          //指定图标
       background: "#" + bg_color,      // 背景颜色
@@ -119,7 +121,7 @@ Page({
       dataType: 'JSON',
       header: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: {
-        user_id: "3",
+        user_id: app.globalData.openid,
         anniversary_name: this.data.anniversary_title,
         anniversary_description: this.data.anniversary_description,
         anniversary_type: this.data.selectedType,
@@ -160,4 +162,12 @@ Page({
       anniversary_description: value
     })
   },
+
+  bindDateChange: function (e) {
+    var date = e.detail.value;
+    console.log(date)
+    this.setData({
+      date: date
+    })
+  }
 })

@@ -87,7 +87,7 @@
   display: block;
   text-align: center;
   color: #999;
-  font-size: 16px;
+  font-size: 10px;
   white-space
   : nowrap;
   text-overflow: ellipsis;

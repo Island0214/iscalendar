@@ -159,7 +159,7 @@ Page({
     var that = this;
     wx.showModal({
       title: '确定删除',
-      content: '是否确定删除该打卡项？',
+      content: '是否确定删除该纪念日？',
       success: function (res) {
         if (res.confirm) {
           // 删除此打卡项

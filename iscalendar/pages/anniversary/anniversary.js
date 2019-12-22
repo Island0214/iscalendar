@@ -57,7 +57,7 @@ Page({
         dataType: 'JSON',
         header: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
-          user_id: "3",
+          user_id: app.globalData.openid,
         },
         success: (res) => {
           console.log("用户的所有纪念日如下：", res.data)
@@ -65,7 +65,6 @@ Page({
           var i = 0;
           for (i = 0; i < item.length; i++) {
             var tmp = item[i];
-            console.log(tmp.id);
             var obj = {
               id: tmp.id,
               name: tmp.anniversary_name,       //纪念日名称
@@ -75,7 +74,6 @@ Page({
               background: tmp.background,
               status: true,
             };
-            console.log(obj);
             arr.push(obj);
           }
 

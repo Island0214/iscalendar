@@ -4,14 +4,14 @@ const app = getApp()
 
 Page({ //页面的生命周期钩子、事件处理函数、页面的默认数据
   data: {
-    content: "当日无日记......",
-    picture:"",
+    content: "",
+    picture: "",
     year: '2019',
     week: "sun1",
     month: "Dec1",
     day: "151",
-    anniversaryCount:"0",
-    checkinCount:"0",
+    anniversaryCount: "0",
+    checkinCount: "0",
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -25,74 +25,11 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       },
       children: [{
         type: 'text',
-        text: '当日无日记......'
+        text: ''
       }]
     }],
-    checkinList: [{
-        id: '1232131',
-        name: '跑步',
-        iconURL: '1.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        show: false,
-      },
-      {
-        id: '1232132',
-        name: '早起',
-        iconURL: '2.png',
-        background: '#5626e530',
-        stickDays: 2,
-        checked: true,
-        show: false,
-      },
-      {
-        id: '1232133',
-        name: '跑步',
-        iconURL: '3.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        show: false,
-      },
-      {
-        id: '1232134',
-        name: '跑步',
-        iconURL: '4.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        show: false,
-      },
-      {
-        id: '1232135',
-        name: '跑步',
-        iconURL: '5.png',
-        background: '#d6c6de',
-        stickDays: 1,
-        checked: true,
-        show: false,
-      }
-    ],
-    anniversaryList: [{
-        id: 1,
-        name: "纪念日1", //纪念日名称
-        iconURL: "1.png", //指定图标
-        passDays: "5", //已过时间
-        createDate: "2019-01-01", //纪念日创建日期
-        background: "#eeeeee",
-        description: '3周年纪念'
-      },
-      {
-        id: 2,
-        name: "纪念日2", //纪念日名称
-        iconURL: "2.png", //指定图标
-        passDays: "2", //已过时间
-        createDate: "2018-01-02", //纪念日创建日期
-        background: "#eeeeee",
-        description: '2个月纪念'
-      },
-    ],
+    checkinList: [],
+    anniversaryList: [],
     files: ['../../images/clock/1.png', '../../images/clock/2.png']
   },
   //事件处理函数
@@ -106,10 +43,10 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
     if (app.globalData.userInfo) {
       var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
       var month = arr_month.indexOf(option.month) + 1;
-      if(arr_month.indexOf(option.month) =="-1"){
+      if (arr_month.indexOf(option.month) == "-1") {
         month = option.month
       }
-      console.log(month+"->"+option.month);
+      console.log(month + "->" + option.month);
       var dateObject = app.getFormatDate(option.year + '-' + option.month + '-' + option.day);
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -124,26 +61,28 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       //获取当日日记内容
       wx.request({
         url: "https://172.19.241.77:443/project/diary/getDiaryByUserIDandDate",
-        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         method: 'POST',
         dataType: 'JSON',
         data: {
-          user_id:"1",
-          this_date:option.year + '-' + month + '-' + option.day,
+          user_id: app.globalData.openid,
+          this_date: option.year + '-' + month + '-' + option.day,
         },
-        
+
         //responseType: 'text',
         success: function(res) {
-          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log("this_date:" + option.year + '-' + month + '-' + option.day)
           console.log(res.data)
           var item = JSON.parse(res.data);
-          if(item.diarystate == "1"){
+          if (item.diarystate == "1") {
             that.setData({
               content: item.content,
-              nodes:item.content,
+              nodes: item.content,
               picture: item.picture
             })
-            
+
           }
           //console.log(item.diarystate)
         },
@@ -153,17 +92,19 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       //获取当日纪念数和打卡数
       wx.request({
         url: "https://172.19.241.77:443/project/user/getOverviewOfToday",
-        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         method: 'POST',
         dataType: 'JSON',
         data: {
-          user_id:"3",
-          this_date:option.year + '-' + month + '-' + option.day,
+          user_id: app.globalData.openid,
+          this_date: option.year + '-' + month + '-' + option.day,
         },
-        
+
         //responseType: 'text',
         success: function(res) {
-          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log("this_date:" + option.year + '-' + month + '-' + option.day)
           console.log(res.data)
           var item = JSON.parse(res.data);
           that.setData({
@@ -178,34 +119,36 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       var checkinArr = new Array();
       wx.request({
         url: "https://172.19.241.77:443/project/checkin/getCheckinsByUser",
-        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         method: 'POST',
         dataType: 'JSON',
         data: {
-          user_id:"3",
+          user_id: app.globalData.openid,
           this_date: option.year + '-' + month + '-' + option.day
         },
         //responseType: 'text',
         success: function(res) {
-          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log("this_date:" + option.year + '-' + month + '-' + option.day)
           console.log(res.data)
           var item = JSON.parse(res.data);
           var i = 0;
-          for(i=0; i<item.length; i++){
+          for (i = 0; i < item.length; i++) {
             var tmp = item[i];
             //console.log(tmp);
             var obj = {
               id: tmp.id,
-              name: tmp.checkin_name,       //打卡名称
-              iconURL: tmp.icon_url,          //指定图标
-              background: tmp.background,      // 背景颜色
-              stickDays: 0,    //坚持日期
-              details: tmp.checkin_description,       //打卡详细内容
+              name: tmp.checkin_name, //打卡名称
+              iconURL: tmp.icon_url, //指定图标
+              background: tmp.background, // 背景颜色
+              stickDays: 0, //坚持日期
+              details: tmp.checkin_description, //打卡详细内容
               status: true,
             };
             console.log(obj);
             checkinArr.push(obj);
-          }   
+          }
 
           // 重新刷新数组
           that.setData({
@@ -220,20 +163,22 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
       var anniversaryArr = new Array();
       wx.request({
         url: "https://172.19.241.77:443/project/anniversary/getAnniversariesByUser",
-        header: {'Content-Type':'application/x-www-form-urlencoded'},
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         method: 'POST',
         dataType: 'JSON',
         data: {
-          user_id: "3",
+          user_id: app.globalData.openid,
           this_date: option.year + '-' + month + '-' + option.day
         },
         //responseType: 'text',
         success: function(res) {
-          console.log("this_date:"+ option.year + '-' + month + '-' + option.day)
+          console.log("this_date:" + option.year + '-' + month + '-' + option.day)
           console.log(res.data)
           var item = JSON.parse(res.data);
           var i = 0;
-          for(i=0; i<item.length; i++){
+          for (i = 0; i < item.length; i++) {
             var tmp = item[i];
             //console.log(tmp);
             var obj = {
@@ -244,11 +189,11 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
               createDate: tmp.anniversary, //纪念日创建日期
               background: tmp.background,
               description: tmp.anniversary_description,
-              anniversary_type:tmp.anniversary_type  //纪念方式
+              anniversary_type: tmp.anniversary_type //纪念方式
             };
             console.log(obj);
             anniversaryArr.push(obj);
-          }   
+          }
 
           // 重新刷新数组
           that.setData({
@@ -258,7 +203,7 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
         fail: function(res) {},
         complete: function(res) {},
       })
-      
+
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -330,7 +275,7 @@ Page({ //页面的生命周期钩子、事件处理函数、页面的默认数�
 
 
   },
-  previewImage: function (e) {
+  previewImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.files // 需要预览的图片http链接列表

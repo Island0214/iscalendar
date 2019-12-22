@@ -29,7 +29,8 @@ Page({
       'year': '',
       'week': ''
     },
-    clocks: []
+    clocks: [],
+    uid: "",
   },
   //事件处理函数
   bindViewTap: function() {
@@ -41,34 +42,68 @@ Page({
     this.setData({
       today: app.globalData.today
     })
-    this.getTodayCheckins()
-    
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+    let that = this
+    wx.login({
+      success: res => {
+        console.log(res)
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          // wx.reLaunch({
+          //   url: '/pages/login/login',
+          // })
+          wx.request({
+            url: "https://172.19.241.77:443/project/user/saveUser",
+            method: "POST",
+            dataType: 'JSON',
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              code: res.code,
+            },
+            success: function (res) {
+              console.log('回调成功')
+              console.log(res)
+              var item = JSON.parse(res.data)
+              that.setData({
+                uid: item.openid
+              })
+              that.getTodayCheckins()
+            },
+            complete: function () {
+              wx.checkSession({
+                success() {
+                  console.log('经过验证，登录有效')
+                  // session_key 未过期，并且在本生命周期一直有效
+                },
+                fail() {
+                  console.log('session过期，请重新登录')
+                  // session_key 已经失效，需要重新执行登录流程
+                  wx.reLaunch({
+                    url: '/pages/login/login',
+                  })
+                }
+              })
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+          wx.reLaunch({
+            url: '/pages/login/login',
           })
         }
-      })
-    }
+
+      }
+    })
+    // app.login()
+    // console.log(app.globalData.openid)
+    // this.getTodayCheckins()
+  },
+  onReady: function () {
+    // this.getTodayCheckins()
+  },
+  onShow: function () {
+    this.getTodayCheckins()
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -156,9 +191,10 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: {
-        user_id: app.globalData.openid,
+        user_id: this.data.uid,
       },
       success: (res) => {
+        console.log(res)
         var item = JSON.parse(res.data);
         var i = 0;
         for (i = 0; i < item.length; i++) {

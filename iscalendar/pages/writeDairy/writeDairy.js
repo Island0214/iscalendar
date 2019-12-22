@@ -1,6 +1,6 @@
 const app = getApp()
 
-Page({   //页面的生命周期钩子、事件处理函数、页面的默认数据
+Page({ //页面的生命周期钩子、事件处理函数、页面的默认数据
   data: {
     userInfo: {},
     hasUserInfo: false,
@@ -38,7 +38,9 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
   onLoad() {
     const platform = wx.getSystemInfoSync().platform
     const isIOS = platform === 'ios'
-    this.setData({ isIOS})
+    this.setData({
+      isIOS
+    })
     const that = this
     this.updatePosition(0)
     let keyboardHeight = 0
@@ -58,15 +60,27 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
 
     })
   },
+  onShow: function () {
+
+  },
   updatePosition(keyboardHeight) {
     const toolbarHeight = 50
-    const { windowHeight, platform } = wx.getSystemInfoSync()
+    const {
+      windowHeight,
+      platform
+    } = wx.getSystemInfoSync()
     let editorHeight = keyboardHeight > 0 ? (windowHeight - keyboardHeight - toolbarHeight) : windowHeight
-    this.setData({ editorHeight, keyboardHeight })
+    this.setData({
+      editorHeight,
+      keyboardHeight
+    })
   },
   calNavigationBarAndStatusBar() {
     const systemInfo = wx.getSystemInfoSync()
-    const { statusBarHeight, platform } = systemInfo
+    const {
+      statusBarHeight,
+      platform
+    } = systemInfo
     const isIOS = platform === 'ios'
     const navigationBarHeight = isIOS ? 44 : 48
     return statusBarHeight + navigationBarHeight
@@ -74,19 +88,75 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
   onEditorReady() {
     //输入-编辑框
     const that = this
-    wx.createSelectorQuery().select('#editor').context(function (res) {
+    wx.createSelectorQuery().select('#editor').context(function(res) {
       that.editorCtx = res.context;
       if (wx.getStorageSync("content")) { // 设置~历史值
-        that.editorCtx.insertText(wx.getStorageSync("content")) // 注意：插入的是对象
+        // console.log(wx.getStorageSync("content"))
+        // that.editorCtx.insertText(wx.getStorageSync("content")) // 注意：插入的是对象
       }
     }).exec()
+
+    var date = new Date()
+    wx.request({
+      url: "https://172.19.241.77:443/project/diary/getDiaryByUserIDandDate",
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      dataType: 'JSON',
+      data: {
+        user_id: app.globalData.openid,
+        this_date: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
+      },
+
+      //responseType: 'text',
+      success: function (res) {
+        console.log(res.data)
+        var item = JSON.parse(res.data);
+        if (item.diarystate == "1") {
+          that.setData({
+            content: item.content,
+            nodes: item.content,
+            picture: item.picture
+          })
+
+          let nodes = item.content.split("<")
+          console.log(nodes)
+
+          for(let i = 0; i < nodes.length; i++) {
+            if (nodes[i].startsWith("p") && nodes[i].indexOf(">") != nodes[i].length - 1){
+              that.editorCtx.insertText({
+                html: '<' + nodes[i] + '</p>',
+                text: nodes[i].split('>')[1]
+              })
+            }
+            if (nodes[i].startsWith("img")) {
+              that.editorCtx.insertImage({
+                src: nodes[i].split('"')[1],
+                data: {
+                  id: 'abcd' + i,
+                  role: 'god'
+                },
+                width: '90%',
+                success: function () {
+                  console.log('insert image success')
+                }
+              })
+            }
+          }
+        }
+        // console.log(that.data.content)
+      },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   },
   // 获取内容
   onContentChange(e) {
     this.setData({
       content: e.detail,
     })
-    wx.setStorageSync("content",e.detail)
+    wx.setStorageSync("content", e.detail)
   },
   // 保存并上传日记
   clickSaveText(e) {
@@ -98,18 +168,25 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     wx.navigateBack()
     wx.request({
       url: "https://172.19.241.77:443/project/diary/createDiary",
-      header: {'Content-Type':'application/x-www-form-urlencoded'},
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       method: 'POST',
       dataType: 'JSON',
       data: {
-        user_id:"3",
-        picture:"",
+        user_id: app.globalData.openid,
+        picture: "",
         content: this.data.content.html
       },
-      
+
       //responseType: 'text',
       success: function(res) {
-        console.log(res.data)
+        // console.log(res.data)
+        wx.showToast({
+          icon: 'success',
+          title: '日记保存成功！',
+          duration: 2000
+        })
       },
       fail: function(res) {},
       complete: function(res) {},
@@ -119,7 +196,10 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     this.editorCtx.blur()
   },
   format(e) {
-    let { name, value } = e.target.dataset
+    let {
+      name,
+      value
+    } = e.target.dataset
     if (!name) return
     // console.log('format', name, value)
     this.editorCtx.format(name, value)
@@ -127,18 +207,20 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
   },
   onStatusChange(e) {
     const formats = e.detail
-    this.setData({ formats })
+    this.setData({
+      formats
+    })
   },
   insertDivider() {
     this.editorCtx.insertDivider({
-      success: function () {
+      success: function() {
         console.log('insert divider success')
       }
     })
   },
   clear() {
     this.editorCtx.clear({
-      success: function (res) {
+      success: function(res) {
         console.log("clear success")
       }
     })
@@ -157,7 +239,7 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     const that = this
     wx.chooseImage({
       count: 1,
-      success: function (res) {
+      success: function(res) {
         that.editorCtx.insertImage({
           src: res.tempFilePaths[0],
           data: {
@@ -165,7 +247,7 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
             role: 'god'
           },
           width: '80%',
-          success: function () {
+          success: function() {
             console.log('insert image success')
           }
         })
@@ -173,22 +255,22 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
     })
   },
 
-  returnLastPage:function(){
+  returnLastPage: function() {
     wx.navigateBack()
   },
-  chooseImage: function (e) {
+  chooseImage: function(e) {
     var that = this;
     wx.chooseImage({
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
+      success: function(res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         // console.log(res)
         that.setData({
           files: that.data.files.concat(res.tempFilePaths)
         });
-        var i=0;
-        for(;i<res.tempFilePaths.length;i++){
+        var i = 0;
+        for (; i < res.tempFilePaths.length; i++) {
           that.editorCtx.insertImage({
             src: res.tempFilePaths[i],
             data: {
@@ -196,7 +278,7 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
               role: 'god'
             },
             width: '90%',
-            success: function () {
+            success: function() {
               console.log('insert image success')
             }
           })
@@ -204,11 +286,11 @@ Page({   //页面的生命周期钩子、事件处理函数、页面的默认数
       }
     })
   },
-  previewImage: function (e) {
+  previewImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.files // 需要预览的图片http链接列表
     })
   }
-  
+
 })
