@@ -7,7 +7,7 @@ Page({
   data: {
     check_title: "",
     check_content: "",
-
+    uid: "3",
   },
 
   /**
@@ -72,7 +72,7 @@ Page({
   onClickSave: function(e){
     console.log("新建一个打卡项");
     //console.log(this.selectComponent("#iconSelector").data.backgroundColor);
-
+    var that = this;
     var image_url = "../../images/clock/" + this.selectComponent("#iconSelector").data.imageUrl;
     var bg_color = this.selectComponent("#iconSelector").data.backgroundColor;
     console.log("pages"+pages);
@@ -101,7 +101,7 @@ Page({
       dataType: 'JSON',
       header: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: {
-        user_id: "3",
+        user_id: that.data.uid,
         checkin_name: this.data.check_title,
         checkin_description: this.data.check_content,
         icon_url: image_url,
