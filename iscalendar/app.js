@@ -5,12 +5,12 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+    this.globalData.openid = ''
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        
+
       }
     })
 
@@ -18,7 +18,7 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-        //   // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          //   // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
@@ -32,11 +32,20 @@ App({
               }
             }
           })
+        } else {
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+            }
+          })
         }
       }
     })
-
-    // this.login()
+    // wx.reLaunch({
+    //   url: '/pages/login/login',
+    // })
+    this.login()
 
     var day = new Date();
     day.setTime(day.getTime());
@@ -66,6 +75,7 @@ App({
     today: {}
   },
   login() {
+    let that = this
     wx.login({
       success: res => {
         console.log(res)
@@ -75,18 +85,22 @@ App({
           //   url: '/pages/login/login',
           // })
           wx.request({
-            url: 'http://fa.com/api/schoolreserve/login',
+            url: "https://172.19.241.77:443/project/user/saveUser",
+            method: "POST",
+            dataType: 'JSON',
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
             data: {
               code: res.code,
-              user_info: this.globalData.userInfo
             },
-            success: function (res) {
+            success: function(res) {
               console.log('回调成功')
-              console.log(res.data.data)
-              wx.setStorageSync('token', res.data.data.token)
-              wx.setStorageSync('user_id', res.data.data.user_id)
+              console.log(res)
+              var item = JSON.parse(res.data)
+              that.globalData.openid = item.openid
             },
-            complete: function () {
+            complete: function() {
               wx.checkSession({
                 success() {
                   console.log('经过验证，登录有效')
@@ -95,7 +109,7 @@ App({
                 fail() {
                   console.log('session过期，请重新登录')
                   // session_key 已经失效，需要重新执行登录流程
-                  wx.switchTab({
+                  wx.reLaunch({
                     url: '/pages/login/login',
                   })
                 }
@@ -104,6 +118,9 @@ App({
           })
         } else {
           console.log('登录失败！' + res.errMsg)
+          wx.reLaunch({
+            url: '/pages/login/login',
+          })
         }
 
       }

@@ -156,7 +156,7 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: {
-        user_id: "3",
+        user_id: app.globalData.openid,
       },
       success: (res) => {
         var item = JSON.parse(res.data);

@@ -44,7 +44,7 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: {
-        user_id: '3',
+        id: '3',
         birthday: e.detail.value,
       },
       success: (res) => {
@@ -79,7 +79,7 @@ Page({
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         data: {
-          user_id: '3',
+          id: '3',
           phone: e.detail.value,
         },
         success: (res) => {
@@ -146,7 +146,7 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: {
-        user_id: '3',
+        id: '3',
       },
       success: (res) => {
         var item = JSON.parse(res.data)
