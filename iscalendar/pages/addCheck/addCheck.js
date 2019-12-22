@@ -88,7 +88,7 @@ Page({
       id: newID_s,
       name: this.data.check_title,       //打卡名称
       iconURL: image_url,          //指定图标
-      background: bg_color,      // 背景颜色
+      background: "#"+bg_color,      // 背景颜色
       stickDays: 0,    //坚持日期
       details: this.data.check_content,       //打卡详细内容
       status: true,

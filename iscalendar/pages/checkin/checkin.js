@@ -9,6 +9,8 @@ Page({
   data: {
     // 是否开启网络功能（Debug）
     isNetworkOn: true ,
+    // 全局变量 用户id
+    uid: "3",
 
     // 所有的打卡列表
     // status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
@@ -55,7 +57,7 @@ Page({
         dataType: 'JSON',
         header: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
-          user_id: "3",
+          user_id: that.data.uid,
         },
         success: (res) => {
           console.log("用户的所有打卡项如下：", res.data)
@@ -69,7 +71,7 @@ Page({
               name: tmp.checkin_name,       //打卡名称
               iconURL: tmp.icon_url,          //指定图标
               background: tmp.background,      // 背景颜色
-              stickDays: 0,    //坚持日期
+              stickDays: tmp.stick_days,    //坚持日期
               details: tmp.checkin_description,       //打卡详细内容
               status: true,
             };

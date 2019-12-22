@@ -8,8 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cur: '',        // 当前名称
-    cur_id: 0,      // 当前id
+    cur: '', // 当前名称
+    cur_id: 0, // 当前id
+    uid: "3", // 用户ID
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -36,15 +37,15 @@ Page({
       'week': ''
     },
 
-    checkinItem:{
-      plannedDays: 'NaN1',      //计划天数
-      checkinDays: 'NaN2',      //打卡天数
-      missedDays: 'NaN3',       //错过天数
+    checkinItem: {
+      plannedDays: 'NaN1', //计划天数
+      checkinDays: 'NaN2', //打卡天数
+      missedDays: 'NaN3', //错过天数
       totalCheckedDays: 'NaN4', //总计打卡天数
       curConsecutiveDays: 'NaN5', //当前连续时长
       maxConsecutiveDays: 'NaN6', //最大连续时长
-      createDay: 'NaN7',         //建立时间
-      checkinProgess: "0"           //当前进度
+      createDay: 'NaN7', //建立时间
+      checkinProgess: "0" //当前进度
     },
 
     icon_url: {
@@ -53,15 +54,14 @@ Page({
     },
 
     //status字段代表此项状态，为true时代表创建并显示，为false时代表对其进行删除或屏蔽
-    clocks: [
-      {
+    clocks: [{
         id: '1232131',
         name: '跑步',
         image: '../../images/clock/1.png',
         background: '#d6c6de',
         days: 1,
         checked: false,
-        status: true, 
+        status: true,
       },
       {
         id: '1232132',
@@ -103,7 +103,7 @@ Page({
   },
 
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
@@ -112,7 +112,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log("message: ", options)
     this.setData({
       cur: options.content,
@@ -128,26 +128,73 @@ Page({
       url: "https://172.19.241.77:443/project/checkin/getCheckinByID",
       method: "POST",
       dataType: 'JSON',
-      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      data: {
-        id: this.data.cur_id
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      success: function (res) {
-        console.log(res.data);
+      data: {
+        checkin_id: this.data.cur_id
+      },
+      success: function(res) {
+        console.log("getcheckinbyID: ",res.data);
         var item = JSON.parse(res.data);
+
+        // 计算打卡进度百分比
+        var pc = 100;
+        if (item.historyday == 0){
+          pc = 0;
+        }else{
+          if (item.totalcheckinday == null || item.historyday == null){
+            pc = 100;
+          }else{
+            var a = item.totalcheckinday;
+            var b = item.historyday;
+            pc = a/b * 100;
+          }
+        }
+
+        // 当前获取不到historyDay的权衡之计
+        var pd = (item.historyday == null) ? item.totalcheckinday : item.historyday;
+        // 当前获取不到missDay的权衡之计
+        var md = (item.missday == null) ? 0 : item.missday;
+
         var obj = {
-          plannedDays: item.planday,      //计划天数
-          checkinDays: item.planday,      //打卡天数
-          missedDays: item.missday,       //错过天数
+          plannedDays: pd, //计划天数
+          checkinDays: item.totalcheckinday, //打卡天数
+          missedDays: md, //错过天数
           totalCheckedDays: item.totalcheckinday, //总计打卡天数
           curConsecutiveDays: item.stick_days, //当前连续时长
           maxConsecutiveDays: item.stick_days, //最大连续时长
-          createDay: item.created_at,         //建立时间
-          checkinProgess: item.totalcheckinday / item.historyday,           //当前进度
+          createDay: item.created_at, //建立时间
+          checkinProgess: pc, //当前进度
         }
         that.setData({
           checkinItem: obj,
         })
+      }
+    })
+    // 获取该打卡项的创建日期，/checkin/getCheckinByID中并没有返回此字段，需要另外进行查找
+    wx.request({
+      url: "https://172.19.241.77:443/project/checkin/getCheckinsAllByUser",
+      method: "POST",
+      dataType: 'JSON',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: that.data.uid
+      },
+      success: function (res) {
+        //console.log("JSON: ",JSON.parse(res.data));
+        var lists = JSON.parse(res.data);
+        for(var i = 0; i < lists.length; i++){
+          var id_i = lists[i].id;
+          if (id_i == that.data.cur_id){
+            that.setData({
+              "checkinItem.createDay": lists[i].created_at
+            })
+            break;
+          }
+        }
       }
     })
 
@@ -182,53 +229,53 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
 
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -238,10 +285,10 @@ Page({
     //TODO:在这里加载个人数据？
   },
   /**
-  * 选择日期后执行的事件
-  * currentSelect 当前点击的日期
-  * allSelectedDays 选择的所有日期（当mulit为true时，allSelectedDays有值）
-  */
+   * 选择日期后执行的事件
+   * currentSelect 当前点击的日期
+   * allSelectedDays 选择的所有日期（当mulit为true时，allSelectedDays有值）
+   */
   afterTapDay(e) {
     console.log('afterTapDay', e.detail); // => { currentSelect: {}, allSelectedDays: [] }
   },
@@ -288,32 +335,38 @@ Page({
     // 请求获取数据库此打卡项的所有打卡日期
     var checkinList = new Array();
     var that = this;
-    var time_str = app.globalData.today.year + "-" + app.globalData.today.month;
+    var arr_month = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+    var int_month = arr_month.indexOf(app.globalData.today.month) + 1;
+    var time_str = app.globalData.today.year + "-" + int_month;
     console.log(time_str);
     wx.request({
       url: "https://172.19.241.77:443/project/checkin/getMonthCheckin",
       method: "POST",
       dataType: 'JSON',
-      header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       data: {
         //id: that.data.cur_id
-        user_id: "3",
-        this_month: "2019-12"   // 需要改一下方法
+        user_id: that.data.uid,
+        this_month: time_str,
       },
-      success: function (res) {
+      success: function(res) {
         var tmpList = JSON.parse(res.data);
         // 进行深度拷贝
         var ll = new Array();
         var i = 0;
-        for (i = 0; i < tmpList.length; i++){    
-          let split1 = tmpList[i].checkin_date.trim().split(" ")[0];
-          let split2 = split1.trim().split("-");
-          var obj = {
-            year: split2[0],
-            month: split2[1],
-            day: split2[2],
+        for (i = 0; i < tmpList.length; i++) {
+          if (tmpList[i].checkin_id == that.data.cur_id) {
+            let split1 = tmpList[i].checkin_date.trim().split(" ")[0];
+            let split2 = split1.trim().split("-");
+            var obj = {
+              year: split2[0],
+              month: split2[1],
+              day: split2[2],
+            }
+            checkinList.push(obj);
           }
-          checkinList.push(obj);
         }
         console.log("checkinlist1", checkinList)
         that.calendar.setSelectedDays(checkinList)
@@ -326,25 +379,27 @@ Page({
     console.log("按下了删除图标");
     var that = this;
 
-    var pages = getCurrentPages();            //得到界面栈
-    var currPage = pages[pages.length - 1];   //当前页面
-    var prevPage = pages[pages.length - 2];  //上一个页面
+    var pages = getCurrentPages(); //得到界面栈
+    var currPage = pages[pages.length - 1]; //当前页面
+    var prevPage = pages[pages.length - 2]; //上一个页面
 
     wx.showModal({
       title: '确定删除',
       content: '是否确定删除该打卡项？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           // 删除此打卡项
           wx.request({
             url: "https://172.19.241.77:443/project/checkin/deleteCheckin",
             method: "POST",
             dataType: 'JSON',
-            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
             data: {
               id: that.data.cur_id
             },
-            success: function (res) {
+            success: function(res) {
               console.log(res.data);
               // 父层界面进行刷新
               prevPage.getDatabaseData();
@@ -358,11 +413,11 @@ Page({
       }
     })
 
-    
+
   },
 
   //按下编辑图标
-  onClickEdit: function(e){
+  onClickEdit: function(e) {
     console.log("按下了编辑图标");
   },
 
